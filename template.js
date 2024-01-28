@@ -1,23 +1,22 @@
-function templatePokeCubeHTML(ID) {
-    console.log('fdfgfdg',ID);
+function templatePokeCubeHTML(ID, firstEvolution, secondEvolution, thirdEvolution, fourthEvolution) {
     return /*html*/`
-        <div class="content">
-            <div id="box${ID}-id" class="box">
+        <div id="content${ID}-id" class="content">
+            <div id="family${ID}-id" class="box">
                 <div class="card" style="--i:1;">
                     <div class="imgBx"><img src="./img/1.png" alt=""></div>
-                    <h2>Some ddsfdsf <br> <span>Web desinger</span></h2>
+                    <h2>${secondEvolution}</h2>
                 </div>
                 <div class="card" style="--i:2;">
                     <div class="imgBx"><img src="./img/2.png" alt=""></div>
-                    <h2>Some ddsfdsf <br> <span>Web desinger</span></h2>
+                    <h2>${thirdEvolution}</h2>
                 </div>
                 <div class="card" style="--i:3;">
                     <div class="imgBx"><img src="./img/3.png" alt=""></div>
-                    <h2>Some ddsfdsf <br> <span>Web desinger</span></h2>
+                    <h2>${fourthEvolution}</h2>
                 </div>
                 <div class="card" style="--i:4;">
-                    <div class="imgBx"><img src="./img/4.png" alt=""></div>
-                    <h2>Some ddsfdsf <br> <span>Web desinger</span></h2>
+                    <div class="imgBx"><img src="./img/3.png" alt=""></div>
+                    <h2>${firstEvolution}</h2>
                 </div>
             </div>
             <div class="btns">
