@@ -18,11 +18,15 @@ function createPokeCubics() {
     element.innerHTML = '';
     for (let idx = 1; idx < 30; idx++){
         if(familyOfThree.includes(idx)) 
-            element.innerHTML += templatePokeCubeHTML(idx,  data[idx - 1].name, data[idx].name, data[idx + 1].name, '' );
+            
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, '',
+                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, '' );
         if(familyOfOne.includes(idx)) 
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','');
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','',
+                                                      data[idx - 1].img, '','','');
         if(familyOfTwo.includes(idx)) 
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name,'','');
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name,'','',
+                                                      data[idx - 1].img, data[idx].img, '','' );
         if(familyOfFour.includes(idx)) 
             element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, data[idx + 2].name);
     }
@@ -42,10 +46,11 @@ async function getPokemon() {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemon;
         let response = await  fetch(url);
         let responseJson = await response.json();
-        let pokeomData = {'name': responseJson['name']};
-        data.push(pokeomData);       
+        let pokeomData = {'name': responseJson['name'],
+                          'img':responseJson.sprites.other.dream_world.front_default};
+        data.push(pokeomData);   
     }
-}
+} 
 
 
 
