@@ -23,8 +23,8 @@ a {
   flex-wrap: wrap;
   width: clamp(300px, 100%, 1920px);
   display: flex;
-  justify-content: start;
-  gap: 104px;
+  justify-content: center;
+  gap: 154px;
   padding: 64px;
 }
 
@@ -40,7 +40,7 @@ a {
   width: 240px;
   height: 300px;
   transform-style: preserve-3d;
-  transform:  perspective(1000px) rotateY(0);
+  transform:  perspective(1000px) rotateY(-30deg);
   transition: 1.5s;
   margin-bottom: 16px;
 }
@@ -222,4 +222,23 @@ a {
 .mew {
   background: url(./img/mew_bg.png);
   background-size: cover;
+}
+
+.loadButton {
+  background-color: rgb(98, 95, 95);
+  color: white;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  border-style: none;
+  outline: none;
+  margin: 32px;
+  cursor: pointer;
+}
+.loadButton:active {
+  background: #333;
+}
+
+.d-none {
+  display: none;
 }
