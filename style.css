@@ -1,3 +1,22 @@
+:root {
+  --normal: #E8E6E5;
+  --fire: #F3733F;
+  --water: #8ED8F6;
+  --electric: #FFDD7B;
+  --grass: #BDD84E;
+  --ice: #96D9D6;
+  --fighting: #FDBD46;
+  --poison: #0A5F6D;
+  --ground: #FCB23C;
+  --psychic: #E6AFD0;
+  --bug: #A6B91A;
+  --rock: #B6A136;
+  --ghost: #735797;
+  --dragon: #889AD1;
+  --fairy: #D685AD;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -27,7 +46,9 @@ a {
   gap: 154px;
   padding: 64px;
 }
-
+body {
+  background: #272727c5;
+}
 
 .content {
   position: relative;
@@ -50,10 +71,12 @@ a {
   width: 240px;
   height: 240px;
   background: #2225;
-  z-index: 1000;
   transform:  translateY(240px) rotateX(90deg) scale(1.1);
-  filter: blur(40px);
+  filter: blur(50px);
 }
+
+
+
 
 .box .card {
   position: absolute;
@@ -80,7 +103,7 @@ a {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   transform: translateZ(30px);
-  z-index: 1000;
+ 
   transition: transform 0.3s ease; 
 }
 
@@ -92,11 +115,10 @@ a {
 }
 
 .box .card .imgBx:hover {
-  transform: scale(1.2);
+  transform: scale(1.1) translateZ(30px);
 }
 .box .card .poke-name {
   height: 60px;
-  background: rgba(255, 255, 255, 0.584);
   border-radius: 20px;
   transform: translateZ(20px);
   transform-style: preserve-3d;
@@ -223,6 +245,129 @@ a {
   background: url(./img/mew_bg.png);
   background-size: cover;
 }
+.mewtow {
+  background: url(./img/mewtow_bg.png);
+  background-size: cover;
+}
+
+.blank {
+  background: url(./img/blank_bg.png);
+  background-size: cover;
+  background-position: 50%, 0%;
+}
+
+
+
+.fire-bg {
+  background: var(--fire);
+}
+.water-bg {
+  background: var(--water);
+}
+.grass-bg {
+  background: var(--grass);
+}
+.bug-bg {
+  background: var(--bug);
+}
+.normal-bg {
+  background: var(--normal);
+}
+.electric-bg {
+  background: var(--electric);
+}
+.poison-bg {
+  background: var(--poison);
+}
+.psychic-bg {
+  background: var(--psychic);
+}
+.fighting-bg {
+  background: var(--fighting);
+}
+.rock-bg {
+  background: var(--rock);
+}
+.ghost-bg {
+  background: var(--ghost);
+}
+.ground-bg {
+  background: var(--ground);
+}
+.fairy-bg {
+  background: var(--fairy);;
+}
+.ice-bg {
+  background: var(--ice);
+}
+.dragon-bg {
+  background: var(--dragon);
+}
+
+
+
+
+
+
+.fireShadow::before {
+  background: var(--fire);
+}
+.waterShadow::before {
+  background: var(--water);
+}
+.grassShadow::before {
+  background: var(--grass);
+}
+.bugShadow::before {
+  background: var(--bug);
+}
+.normalShadow::before {
+  background: var(--normal);
+}
+.electricShadow::before {
+  background: var(--electric);
+}
+.poisonShadow::before {
+  background: var(--poison);
+}
+.psychicShadow::before {
+  background: var(--psychic);
+}
+.fightingShadow::before {
+  background: var(--fighting);
+}
+.rockShadow::before {
+  background: var(--rock);
+}
+.ghostShadow::before {
+  background: var(--ghost);
+}
+.groundShadow::before {
+  background: var(--ground);
+}
+.fairyShadow::before {
+  background: var(--fairy);
+}
+.iceShadow::before {
+  background: var(--ice);
+}
+.dragonShadow::before {
+  background: var(--dragon);
+}
+
+.mixShadow::before {
+  background: linear-gradient(217deg,#f6e652, rgba(8, 209, 39, 0) 70.71%),
+            linear-gradient(127deg, #ff9441, rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, #529AD0, rgba(0,0,255,0) 70.71%);
+}
+.mixShadowfour::before {
+  background: linear-gradient(217deg,#529AD0, rgba(8, 209, 39, 0) 70.71%),
+            linear-gradient(217deg,#f6e652, rgba(8, 209, 39, 0) 99.71%),
+            linear-gradient(127deg, #ff9441, rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, #8b7b62, rgba(0,0,255,0) 70.71%);
+}
+
+
 
 .loadButton {
   background-color: rgb(98, 95, 95);

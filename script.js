@@ -10,6 +10,7 @@ const typeBackgrounds = {
     'fire': 'fire',
     'water': 'water',
     'grass': 'grass',
+    'electric': 'electric',
     'bug': 'bug',
     'normal': 'normal',
     'poison': 'poison',
@@ -27,7 +28,7 @@ const typeBackgrounds = {
 async function init() {
     let start = 1;
     let amount = 28
-    await getPokemon(start,amount);
+    await getPokemonData(start,amount);
     createPokeCubics(start, amount);
     handlerRotation();
 }
@@ -77,7 +78,6 @@ function createHoverListeners(familyElement, familyID) {
     if (degrees[familyID] !== 0) {
         familyElement.addEventListener('mouseenter', function() {
             familyElement.style.transform = `perspective(1000px) rotateY(${degrees[familyID] + 30}deg)`;
-
         });
         familyElement.addEventListener('mouseleave', function() {
             familyElement.style.transform = `perspective(1000px) rotateY(${degrees[familyID] - 0}deg)`;
@@ -90,40 +90,44 @@ function createPokeCubics(start, amount) {
     let element = document.getElementById('content-id');
     for (let idx = start; idx < amount; idx++){
         if(idx == 151) {
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','', 'mew');
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','', 'mew','psychic-bg', 'psychicShadow');
+            rotateList.push(idx);
+            counter++;
+        }
+        if(idx == 150) {
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','', 'mewtow','psychic-bg', 'psychicShadow');
             rotateList.push(idx);
             counter++;
         }
         if(idx == 144) {
             element.innerHTML += templatePokeCubeOfSpecialThreeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, '',
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, '', 'ice','electric','fire');
+                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img);
             rotateList.push(idx);
             counter++;
         }
         if(familyOfThree.includes(idx) && idx !==144) {
             let type = handlerPokemonTypeBg(data[idx - 1].type);
             element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, '',
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, '', type);
+                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, '', type, type + '-bg', type + 'Shadow');
             rotateList.push(idx);
             counter++;
         }
-        if(familyOfOne.includes(idx) && idx !==151) {
+        if(familyOfOne.includes(idx) && idx !==151&& idx !==150) {
             let type = handlerPokemonTypeBg(data[idx - 1].type);
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','',  type);
+            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','',  type, type + '-bg', type + 'Shadow');
             rotateList.push(idx);
             counter++;
         }
         if(familyOfTwo.includes(idx)) {
             let type = handlerPokemonTypeBg(data[idx - 1].type);
             element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name,'','',
-                                                        data[idx - 1].img, data[idx].img, '','' , type);
+                                                        data[idx - 1].img, data[idx].img, '','' , type, type + '-bg', type + 'Shadow');
             rotateList.push(idx);
             counter++;
         } 
         if(familyOfFour.includes(idx)) {
-            let type = handlerPokemonTypeBg(data[idx - 1].type);
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, data[idx + 2].name,
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, data[idx + 2].img, type);
+            element.innerHTML += templatePokeCubeOfSpecialFourHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, data[idx + 2].name,
+                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, data[idx + 2].img);
             rotateList.push(idx);
             counter++;
         } 
@@ -148,7 +152,7 @@ function slider(ID, direction) {
 }
 
 
-async function getPokemon(start, amount) {
+async function getPokemonData(start, amount) {
     for (let pokemonID = start; pokemonID <= amount; pokemonID++) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
         let response = await  fetch(url);
@@ -165,7 +169,7 @@ async function loadPokemon() {
     let lastPokemonIndex = data.length;
     let start = lastPokemonIndex + 1;
     let amount = start + 30;
-    await getPokemon(start,amount);
+    await getPokemonData(start,amount);
     createPokeCubics(start, amount);
     disableLoadBtn();
     handlerRotation();
