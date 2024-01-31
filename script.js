@@ -248,20 +248,20 @@ function firstLetterUppercase(word) {
 }
 
 function switchPokemon(direction, ID) {
-    console.log(ID)
     if (direction == 1) 
         ID += 1;
     else if (direction == -1) 
         ID -= 1;
-    console.log(ID)
     openPokeCard(ID);
 
 }
 
 function disablePokemonSwitchBtn(ID) {
+    if (data[ID +1] == undefined)
+        return [false, true];
     if (ID == 0) 
         return [true, false];
-    if (ID == 151)
+    if (ID == 150)
         return [false, true];
     return  [false, false ]
 }
