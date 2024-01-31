@@ -26,10 +26,19 @@
 ul, ol {
   list-style: none;
 }
+h1,h2,h3,h4,h5,h6 {
+  margin-inline-start: 0;
+  margin-block-end: 0;
+}
+
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .container {
@@ -49,6 +58,7 @@ a {
 }
 body {
   background: #272727;
+  font-family: 'Poppins', sans-serif;
 }
 
 .content {
@@ -106,6 +116,10 @@ body {
   transform: translateZ(30px);
  
   transition: transform 0.3s ease; 
+}
+
+.cursor {
+  cursor: default !important;
 }
 
 .box .card .imgBx img {
@@ -385,9 +399,106 @@ body {
   background: #333;
 }
 
-.d-none {
-  display: none;
+.popup-bg {
+  overflow: hidden;
+  height: 100vh;
+  background: #110312;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.pokemon-card {
+  width: clamp(300px, 100%, 1920px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pokemon-card .card-header {
+  color: white;
+  background-position: 50%;
+
+
+}
+
+.pokemon-card .card-header .menu {
+  margin-block: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+.pokemon-card .card-header .menu h1{
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.pokemon-card .card-header .subheader-type {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.card-type {
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.pokemon-card .stats-container {
+  background: white;
+  width: 50%;
+  margin-top: -40px;
+  padding-bottom: 16px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px 30px 0 0;
+}
+
+.pokemon-card .stats-container img{
+  width: 180px;
+  margin-top: -165px;
+  filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.646));
+}
+
+.pokemon-card .stats-container .toggle-section{
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 100px;
+}
+
+.pokemon-card .stats-container .toggle-section h2{
+  font-size: 20px;
+}
+.pokemon-card .stats-container .about-container {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+.pokemon-card .stats-container .about-container .left {
+  color: rgb(141, 141, 141);
+}
+.pokemon-card .stats-container h2 {
+  font-size: 20px;
+  margin-top: 16px;
+}
+
+
+.card-header {
+  width: 50%;
+  min-height: 35vh;
+}
+
+
+
 
 @media (max-width: 650px) {
   .content {
@@ -428,4 +539,10 @@ body {
     width: 100%;
     font-size: 14px;
   }
+}
+
+
+
+.d-none {
+  display: none;
 }

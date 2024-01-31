@@ -29,8 +29,9 @@ async function init() {
     let start = 1;
     let amount = 28
     await getPokemonData(start,amount);
-    createPokeCubics(start, amount);
-    handlerRotation();
+    await createPokeCubes(start, amount);
+    await handlerRotation();
+    
 }
 
 
@@ -86,7 +87,7 @@ function createHoverListeners(familyElement, familyID) {
 }
 
 
-function createPokeCubics(start, amount) {
+function createPokeCubes(start, amount) {
     let element = document.getElementById('content-id');
     for (let idx = start; idx < amount; idx++){
         if(idx == 151) {
@@ -157,20 +158,43 @@ async function getPokemonData(start, amount) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
         let response = await  fetch(url);
         let responseJson = await response.json();
-        let pokeomData = {'name': responseJson.name,
+        let pokemonData = {'name': responseJson.name,
                           'img':responseJson.sprites.other.home.front_default,
-                          'type':responseJson.types[0].type.name};        
-        data.push(pokeomData);
+                          'type':responseJson.types[0].type.name,
+                          'base_stat_name': [], 
+                          'all_types': [],
+                          'all_ability': [],
+                          'physicalStats': [responseJson.height,responseJson.weight]}; 
+        getPokemonStats(responseJson, pokemonData); 
+        getPokemonAllTyps(responseJson, pokemonData); 
+        getPokemonAbilities(responseJson, pokemonData); 
+        data.push(pokemonData);
+
     }
+    
 } 
-
-
+function getPokemonAbilities(responseJson, pokemonData) {
+    for (let ability of responseJson.abilities) {
+        
+        pokemonData.all_ability.push(ability.ability.name);
+    }
+}
+function getPokemonStats(responseJson, pokemonData) {
+    for (let stat of responseJson.stats) {
+        pokemonData.base_stat_name.push(stat.base_stat);
+    }
+}
+function getPokemonAllTyps(responseJson, pokemonData) {
+    for (let type of responseJson.types) {
+        pokemonData.all_types.push(type.type.name);
+    }
+}
 async function loadPokemon() {
     let lastPokemonIndex = data.length;
     let start = lastPokemonIndex + 1;
     let amount = start + 30;
     await getPokemonData(start,amount);
-    createPokeCubics(start, amount);
+    createPokeCubes(start, amount);
     disableLoadBtn();
     handlerRotation();
 }
@@ -180,4 +204,64 @@ function disableLoadBtn() {
     let element = document.getElementById('loadButton');
     if (data.length == 152) 
         element.classList.add('d-none');
+}
+
+
+function openPokeCard(ID) {
+    let element = document.getElementById('pokemon-popup-id');
+    element.classList.remove('d-none');
+    document.body.style.overflow = 'hidden';
+    const disableBtn = disablePokemonSwitchBtn(ID);
+    console.log(disableBtn)
+    console.log(data[ID].name)
+    element.innerHTML = templatePokemonCardHTML(ID, data[ID].name, data[ID].type, data[ID].img, disableBtn[0], disableBtn[1]);
+    
+    createPokemonType(ID);
+    createPokemonAbout(ID);
+    renderChart(ID);
+}
+
+function closePokemonCard() {
+    let element = document.getElementById('pokemon-popup-id');
+    element.classList.add('d-none');
+    document.body.style.overflow = 'auto';
+}
+
+function createPokemonType(ID) {
+    const element = document.getElementById('types-id');
+    for (let type of data[ID].all_types) {
+        const capitalizedType = firstLetterUppercase(type);
+        element.innerHTML += `<div class="card-type ${data[ID].type + '-bg'}">${capitalizedType}</div>`;
+    }
+}
+
+function createPokemonAbout(ID) {
+    const element = document.getElementById('abilities-id');
+    element.innerHTML =  templatePokemonPhysicalStatsHTML(data[ID].physicalStats[0], data[ID].physicalStats[1]);
+    for (let ability of data[ID].all_ability) {
+        element.innerHTML += `<div>${ability}</div>`;
+    }
+}
+
+function firstLetterUppercase(word) {
+    return word[0].toUpperCase() + word.substring(1)
+}
+
+function switchPokemon(direction, ID) {
+    console.log(ID)
+    if (direction == 1) 
+        ID += 1;
+    else if (direction == -1) 
+        ID -= 1;
+    console.log(ID)
+    openPokeCard(ID);
+
+}
+
+function disablePokemonSwitchBtn(ID) {
+    if (ID == 0) 
+        return [true, false];
+    if (ID == 151)
+        return [false, true];
+    return  [false, false ]
 }
