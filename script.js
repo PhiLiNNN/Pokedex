@@ -157,8 +157,8 @@ async function getPokemonData(start, amount) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
         let response = await  fetch(url);
         let responseJson = await response.json();
-        let pokeomData = {'name': responseJson['name'],
-                          'img':responseJson.sprites.other.dream_world.front_default,
+        let pokeomData = {'name': responseJson.name,
+                          'img':responseJson.sprites.other.home.front_default,
                           'type':responseJson.types[0].type.name};        
         data.push(pokeomData);
     }
