@@ -1,22 +1,72 @@
-function templatePokeCubeHTML(ID, firstEvolution, secondEvolution, thirdEvolution, fourthEvolution,
-                                firstEvoImg, secondEvoImg, thirdEvoImg, fourthEvoImg,
-                                type, bg, shadow) {
-                            
-    const fourthImgElement = fourthEvoImg ? /*html*/`<div class="imgBx" onclick="openPokeCard(${ID + 2})"><img src="${fourthEvoImg}"></div>
-                                            <div class="poke-name ${bg}">
-                                                <h2>${fourthEvolution}</h2>
-                                            </div>` : `<div class="imgBx cursor"></div>
-                                            <div></div>` ;
-    const thirdImgElement = thirdEvoImg ? /*html*/`<div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${thirdEvoImg}"></div>
-                                            <div class="poke-name ${bg}">
-                                                <h2>${thirdEvolution}</h2>
-                                            </div>` : `<div class="imgBx cursor"></div>
-                                            <div></div>` ;
-    const secondImgElement = secondEvoImg ? /*html*/`<div class="imgBx" onclick="openPokeCard(${ID })"><img src="${secondEvoImg}"></div>
-                                            <div class="poke-name ${bg}">
-                                                <h2>${secondEvolution}</h2>
-                                            </div>` : `<div class="imgBx cursor"></div>
-                                            <div></div>` ;
+const typeBackgrounds = {
+    'fire': 'fire',
+    'water': 'water',
+    'grass': 'grass',
+    'electric': 'electric',
+    'bug': 'bug',
+    'normal': 'normal',
+    'poison': 'poison',
+    'psychic': 'psychic',
+    'fighting': 'fighting',
+    'rock': 'rock',
+    'ghost': 'ghost',
+    'ground': 'ground',
+    'fairy': 'fairy',
+    'ice': 'ice',
+    'dragon': 'dragon'
+};
+let fourthImgElement;
+let thirdImgElement;
+let secondImgElement;
+let firstImgElement;
+
+function handlerPokemonTypeBg(type) {
+    if (type in typeBackgrounds) 
+        return typeBackgrounds[type];
+    else 
+        return type;
+}
+
+function emptyCardHTML() {
+    return /*html*/ `<div class="imgBx cursor"></div>` ;
+}
+
+function fillCardHTML(ID) {
+    const type = handlerPokemonTypeBg(data[ID].type);
+    const bg = type + '-bg';
+    return /*html*/`
+        <div class="imgBx" onclick="openPokeCard(${ID })">
+            <img src="${data[ID].img}">
+        </div>
+        <div class="poke-name ${bg}">
+            <h2>${data[ID].name}</h2>
+        </div>`;
+}
+
+
+function checkFamilySize(ID, family) {
+    firstImgElement =  fillCardHTML(ID - 1);
+    if(family == 3) {
+        fourthImgElement = emptyCardHTML();
+        thirdImgElement =  fillCardHTML(ID + 1);
+        secondImgElement =  fillCardHTML(ID);
+    } else if(family == 2) {
+        fourthImgElement, thirdImgElement = emptyCardHTML();
+        secondImgElement =  fillCardHTML(ID); 
+        
+    } else if(family == 1) {
+        fourthImgElement, thirdImgElement, secondImgElement = emptyCardHTML();
+    }
+}
+
+function templatePokeCubeHTML(ID, family) {
+    let type = handlerPokemonTypeBg(data[ID - 1].type);
+    checkFamilySize(ID, family);
+    const shadow = type + 'Shadow';
+    if (ID == 150) 
+        type = 'mewtow'
+    if (ID == 151) 
+        type = 'mew'
     return /*html*/`
         <div id="content${ID}-id" class="content">
                 <div id="family${ID}-id" class="box ${shadow}">
@@ -30,10 +80,7 @@ function templatePokeCubeHTML(ID, firstEvolution, secondEvolution, thirdEvolutio
                         ${fourthImgElement}
                     </div>
                     <div class="card ${type}" style="--i:4;">
-                        <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${firstEvoImg}"></div>
-                        <div class="poke-name ${bg}">
-                            <h2>${firstEvolution}</h2>
-                        </div>
+                        ${firstImgElement}
                     </div>
                 </div>
             <div class="btns">
@@ -44,34 +91,35 @@ function templatePokeCubeHTML(ID, firstEvolution, secondEvolution, thirdEvolutio
     `;
 }
 
-function templatePokeCubeOfSpecialThreeHTML(ID, firstEvolution, secondEvolution, thirdEvolution, fourthEvolution,
-                                firstEvoImg, secondEvoImg, thirdEvoImg, fourthEvoImg) {
-    const fourthImgElement = fourthEvoImg ? `<div class="imgBx"><img src="${fourthEvoImg}"></div>` : `<div class="imgBx cursor"></div>`;                             
+
+
+
+function templatePokeCubeOfSpecialThreeHTML(ID) {       
     return /*html*/`
         <div id="content${ID}-id" class="content">
             <div id="family${ID}-id" class="box mixShadow">
                 <div class="card electric" style="--i:1;">
-                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${secondEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${data[ID].img}"></div>
                     <div class="poke-name electric-bg">
-                        <h2>${secondEvolution}</h2>
+                        <h2>${data[ID].name}</h2>
                     </div>
                 </div>
                 <div class="card fire" style="--i:2;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${thirdEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].img}"></div>
                     <div class="poke-name fire-bg">
-                        <h2>${thirdEvolution}</h2>
+                        <h2>${data[ID + 1].name}</h2>
                     </div>
                 </div>
                 <div class="card blank" style="--i:3;">
-                    ${fourthImgElement}
+                    <div class="imgBx cursor"></div>
                     <div class="poke-name">
-                        <h2>${fourthEvolution}</h2>
+                        <h2></h2>
                     </div>
                 </div>
                 <div class="card ice" style="--i:4;">
-                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${firstEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].img}"></div>
                     <div class="poke-name ice-bg">
-                        <h2>${firstEvolution}</h2>
+                        <h2>${data[ID - 1].name}</h2>
                     </div>
                 </div>
             </div>
@@ -84,33 +132,32 @@ function templatePokeCubeOfSpecialThreeHTML(ID, firstEvolution, secondEvolution,
 }
 
 
-function templatePokeCubeOfSpecialFourHTML(ID, firstEvolution, secondEvolution, thirdEvolution, fourthEvolution,
-                                firstEvoImg, secondEvoImg, thirdEvoImg, fourthEvoImg) {
+function templatePokeCubeOfSpecialFourHTML(ID) {
     return /*html*/`
         <div id="content${ID}-id" class="content">
             <div id="family${ID}-id" class="box mixShadowfour">
                 <div class="card water" style="--i:1;">
-                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${secondEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${data[ID].img}"></div>
                     <div class="poke-name water-bg">
-                        <h2>${secondEvolution}</h2>
+                        <h2>${data[ID].name}</h2>
                     </div>
                 </div>
                 <div class="card electric" style="--i:2;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${thirdEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].img}"></div>
                     <div class="poke-name electric-bg">
-                        <h2>${thirdEvolution}</h2>
+                        <h2>${data[ID + 1].name}</h2>
                     </div>
                 </div>
                 <div class="card fire" style="--i:3;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 2})"><img src="${fourthEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID + 2})"><img src="${data[ID + 2].img}"></div>
                     <div class="poke-name fire-bg">
-                        <h2>${fourthEvolution}</h2>
+                        <h2>${data[ID + 2].name}</h2>
                     </div>
                 </div>
                 <div class="card normal" style="--i:4;">
-                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${firstEvoImg}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].img}"></div>
                     <div class="poke-name normal-bg">
-                        <h2>${firstEvolution}</h2>
+                        <h2>${data[ID - 1].name}</h2>
                     </div>
                 </div>
             </div>
@@ -122,15 +169,18 @@ function templatePokeCubeOfSpecialFourHTML(ID, firstEvolution, secondEvolution, 
     `;
 }
 
-function templatePokemonCardHTML(ID, name, bg, img, isLeftButtonActive, isRightButtonActive) {
+function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive) {
+    let name = data[ID].name;
+    let background  = data[ID].type;
+    let img = data[ID].img;
     if(ID == 149) 
-        bg = 'mewtow'
+        background = 'mewtow'
     if(ID == 150) 
-        bg = 'mew'
+        background = 'mew'
     return /*html*/`
             <div class=" wrapper">
             <div class="pokemon-card">
-                <div class="card-header ${bg}">
+                <div class="card-header ${background}">
                     <div class="menu">
                         <button onclick="closePokemonCard()">x</button>
                         <h1>${name}</h1>

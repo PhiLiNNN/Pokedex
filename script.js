@@ -6,31 +6,13 @@ const familyOfOne = [83,95,108,113,114,115,122,123,124,125,126,127,128,131,132,1
 const familyOfTwo = [19,21,23,25,27,35,37,39,41,46,48,50,52,54,56,58,72,77,79,81,84,86,88,90,96,98,100,102,104,106,109,111,116,118,120,129,138,140]
 const familyOfThree = [1,4,7,10,13,16,29,32,43,60,63,66,69,74,92,144,147]
 const familyOfFour = [133]
-const typeBackgrounds = {
-    'fire': 'fire',
-    'water': 'water',
-    'grass': 'grass',
-    'electric': 'electric',
-    'bug': 'bug',
-    'normal': 'normal',
-    'poison': 'poison',
-    'psychic': 'psychic',
-    'fighting': 'fighting',
-    'rock': 'rock',
-    'ghost': 'ghost',
-    'ground': 'ground',
-    'fairy': 'fairy',
-    'ice': 'ice',
-    'dragon': 'dragon'
-};
-
 
 async function init() {
     let start = 1;
     let amount = 28
     await getPokemonData(start,amount);
-    await createPokeCubes(start, amount);
-    await handlerRotation();
+    createPokeCubes(start, amount);
+    handlerRotation();
     
 }
 
@@ -90,59 +72,33 @@ function createHoverListeners(familyElement, familyID) {
 function createPokeCubes(start, amount) {
     let element = document.getElementById('content-id');
     for (let idx = start; idx < amount; idx++){
-        if(idx == 151) {
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','', 'mew','psychic-bg', 'psychicShadow');
-            rotateList.push(idx);
-            counter++;
-        }
-        if(idx == 150) {
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','', 'mewtow','psychic-bg', 'psychicShadow');
-            rotateList.push(idx);
-            counter++;
-        }
         if(idx == 144) {
-            element.innerHTML += templatePokeCubeOfSpecialThreeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, '',
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img);
-            rotateList.push(idx);
-            counter++;
+            element.innerHTML += templatePokeCubeOfSpecialThreeHTML(idx);
+            helperFunction(idx);
         }
         if(familyOfThree.includes(idx) && idx !==144) {
-            let type = handlerPokemonTypeBg(data[idx - 1].type);
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, '',
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, '', type, type + '-bg', type + 'Shadow');
-            rotateList.push(idx);
-            counter++;
+            element.innerHTML += templatePokeCubeHTML(idx, 3);
+            helperFunction(idx);
         }
-        if(familyOfOne.includes(idx) && idx !==151&& idx !==150) {
-            let type = handlerPokemonTypeBg(data[idx - 1].type);
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, '','','', data[idx - 1].img, '','','',  type, type + '-bg', type + 'Shadow');
-            rotateList.push(idx);
-            counter++;
+        if(familyOfOne.includes(idx)) {
+            element.innerHTML += templatePokeCubeHTML(idx, 1);
+            helperFunction(idx);
         }
         if(familyOfTwo.includes(idx)) {
-            let type = handlerPokemonTypeBg(data[idx - 1].type);
-            element.innerHTML += templatePokeCubeHTML(idx, data[idx - 1].name, data[idx].name,'','',
-                                                        data[idx - 1].img, data[idx].img, '','' , type, type + '-bg', type + 'Shadow');
-            rotateList.push(idx);
-            counter++;
+            element.innerHTML += templatePokeCubeHTML(idx, 2);
+            helperFunction(idx);
         } 
         if(familyOfFour.includes(idx)) {
-            element.innerHTML += templatePokeCubeOfSpecialFourHTML(idx, data[idx - 1].name, data[idx].name, data[idx + 1].name, data[idx + 2].name,
-                                                      data[idx - 1].img, data[idx].img, data[idx + 1].img, data[idx + 2].img);
-            rotateList.push(idx);
-            counter++;
+            element.innerHTML += templatePokeCubeOfSpecialFourHTML(idx);
+            helperFunction(idx);
         } 
     }
 }
 
-
-function handlerPokemonTypeBg(type) {
-    if (type in typeBackgrounds) 
-        return typeBackgrounds[type];
-    else 
-        return type;
+function helperFunction(idx) {
+    rotateList.push(idx);
+    counter++;
 }
-
 
 function slider(ID, direction) {
     let box = document.getElementById(`family${ID}-id`);
@@ -166,7 +122,7 @@ async function getPokemonData(start, amount) {
                           'all_ability': [],
                           'physicalStats': [responseJson.height,responseJson.weight]}; 
         getPokemonStats(responseJson, pokemonData); 
-        getPokemonAllTyps(responseJson, pokemonData); 
+        getPokemonAllTypes(responseJson, pokemonData); 
         getPokemonAbilities(responseJson, pokemonData); 
         data.push(pokemonData);
 
@@ -184,7 +140,7 @@ function getPokemonStats(responseJson, pokemonData) {
         pokemonData.base_stat_name.push(stat.base_stat);
     }
 }
-function getPokemonAllTyps(responseJson, pokemonData) {
+function getPokemonAllTypes(responseJson, pokemonData) {
     for (let type of responseJson.types) {
         pokemonData.all_types.push(type.type.name);
     }
@@ -212,9 +168,7 @@ function openPokeCard(ID) {
     element.classList.remove('d-none');
     document.body.style.overflow = 'hidden';
     const disableBtn = disablePokemonSwitchBtn(ID);
-    console.log(disableBtn)
-    console.log(data[ID].name)
-    element.innerHTML = templatePokemonCardHTML(ID, data[ID].name, data[ID].type, data[ID].img, disableBtn[0], disableBtn[1]);
+    element.innerHTML = templatePokemonCardHTML(ID, disableBtn[0], disableBtn[1]);
     
     createPokemonType(ID);
     createPokemonAbout(ID);
