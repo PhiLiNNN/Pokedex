@@ -34,13 +34,26 @@ function emptyCardHTML() {
 function fillCardHTML(ID) {
     const type = handlerPokemonTypeBg(data[ID].type);
     const bg = type + '-bg';
-    return /*html*/`
-        <div class="imgBx" onclick="openPokeCard(${ID })">
-            <img src="${data[ID].img}">
-        </div>
-        <div class="poke-name ${bg}">
-            <h2>${data[ID].name}</h2>
-        </div>`;
+    const setToFlying = ['beedrill', 'venomoth', 'geodude', 'magnemite', 'magneton', 'gastly', 'haunter', 'koffing', 'weezing', 'mew'];
+    const setNotToFlying =['pidgey', 'spearow', 'farfetchd', 'doduo', 'dodrio']
+if ( (data[ID].all_types[1] == 'flying' || setToFlying.includes(data[ID].name)) && !setNotToFlying.includes(data[ID].name)) {
+        return /*html*/`
+            <div class="imgBx bottom" onclick="openPokeCard(${ID })">
+                <img src="${data[ID].imgAnimated}">
+            </div>
+            <div class="poke-name ${bg}">
+                <h2>${data[ID].name}</h2>
+            </div>`;
+    }
+    else {
+        return /*html*/`
+            <div class="imgBx" onclick="openPokeCard(${ID })">
+                <img src="${data[ID].imgAnimated}">
+            </div>
+            <div class="poke-name ${bg}">
+                <h2>${data[ID].name}</h2>
+            </div>`;
+    }
 }
 
 
@@ -51,11 +64,14 @@ function checkFamilySize(ID, family) {
         thirdImgElement =  fillCardHTML(ID + 1);
         secondImgElement =  fillCardHTML(ID);
     } else if(family == 2) {
-        fourthImgElement, thirdImgElement = emptyCardHTML();
+        fourthImgElement = emptyCardHTML();
+        thirdImgElement = emptyCardHTML();
         secondImgElement =  fillCardHTML(ID); 
         
     } else if(family == 1) {
-        fourthImgElement, thirdImgElement, secondImgElement = emptyCardHTML();
+        fourthImgElement = emptyCardHTML();
+        thirdImgElement = emptyCardHTML();
+        secondImgElement = emptyCardHTML();
     }
 }
 
@@ -92,20 +108,18 @@ function templatePokeCubeHTML(ID, family) {
 }
 
 
-
-
-function templatePokeCubeOfSpecialThreeHTML(ID) {       
+function templatePokeCubeOfSpecialThreeHTML(ID) {     
     return /*html*/`
         <div id="content${ID}-id" class="content">
             <div id="family${ID}-id" class="box mixShadow">
                 <div class="card electric" style="--i:1;">
-                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${data[ID].img}"></div>
+                    <div class="imgBx bottom" onclick="openPokeCard(${ID})"><img src="${data[ID].imgAnimated}"></div>
                     <div class="poke-name electric-bg">
                         <h2>${data[ID].name}</h2>
                     </div>
                 </div>
                 <div class="card fire" style="--i:2;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].img}"></div>
+                    <div class="imgBx bottom" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].imgAnimated}"></div>
                     <div class="poke-name fire-bg">
                         <h2>${data[ID + 1].name}</h2>
                     </div>
@@ -117,7 +131,7 @@ function templatePokeCubeOfSpecialThreeHTML(ID) {
                     </div>
                 </div>
                 <div class="card ice" style="--i:4;">
-                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].img}"></div>
+                    <div class="imgBx bottom" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].imgAnimated}"></div>
                     <div class="poke-name ice-bg">
                         <h2>${data[ID - 1].name}</h2>
                     </div>
@@ -137,25 +151,25 @@ function templatePokeCubeOfSpecialFourHTML(ID) {
         <div id="content${ID}-id" class="content">
             <div id="family${ID}-id" class="box mixShadowfour">
                 <div class="card water" style="--i:1;">
-                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${data[ID].img}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID})"><img src="${data[ID].imgAnimated}"></div>
                     <div class="poke-name water-bg">
                         <h2>${data[ID].name}</h2>
                     </div>
                 </div>
                 <div class="card electric" style="--i:2;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].img}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].imgAnimated}"></div>
                     <div class="poke-name electric-bg">
                         <h2>${data[ID + 1].name}</h2>
                     </div>
                 </div>
                 <div class="card fire" style="--i:3;">
-                    <div class="imgBx" onclick="openPokeCard(${ID + 2})"><img src="${data[ID + 2].img}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID + 2})"><img src="${data[ID + 2].imgAnimated}"></div>
                     <div class="poke-name fire-bg">
                         <h2>${data[ID + 2].name}</h2>
                     </div>
                 </div>
                 <div class="card normal" style="--i:4;">
-                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].img}"></div>
+                    <div class="imgBx" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].imgAnimated}"></div>
                     <div class="poke-name normal-bg">
                         <h2>${data[ID - 1].name}</h2>
                     </div>

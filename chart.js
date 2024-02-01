@@ -43,12 +43,11 @@ function renderChart(ID) {
                         font: {
                             size: 12
                         },
-                        stepSize: 20
+                        stepSize: 40
                     },
                     grid: { display: false },
                     beginAtZero: true,
-                    stepValue: 20,
-                    max: 100
+                    stepValue: 10 
                 },
             }
         }

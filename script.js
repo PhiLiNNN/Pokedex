@@ -3,8 +3,8 @@ let data = []
 let rotateList = [];
 let counter = 0;
 const familyOfOne = [83,95,108,113,114,115,122,123,124,125,126,127,128,131,132,137,142,143,150,151]
-const familyOfTwo = [19,21,23,25,27,35,37,39,41,46,48,50,52,54,56,58,72,77,79,81,84,86,88,90,96,98,100,102,104,106,109,111,116,118,120,129,138,140]
-const familyOfThree = [1,4,7,10,13,16,29,32,43,60,63,66,69,74,92,144,147]
+const familyOfTwo = [19,21,23,25,27,35,37,39,41,46,48,50,52,54,56,58,72,77,79,81,84,86,88,90,98,100,102,104,106,109,111,116,118,120,129,138,140]
+const familyOfThree = [1,4,7,10,13,16,29,32,43,60,63,66,69,74,92,96,144,147]
 const familyOfFour = [133]
 
 async function init() {
@@ -113,9 +113,12 @@ async function getPokemonData(start, amount) {
     for (let pokemonID = start; pokemonID <= amount; pokemonID++) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
         let response = await  fetch(url);
+        let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
         let responseJson = await response.json();
+        
         let pokemonData = {'name': responseJson.name,
-                          'img':responseJson.sprites.other.home.front_default,
+                          'img': responseJson.sprites.other.home.front_default,  
+                          'imgAnimated': imgAnimated,
                           'type':responseJson.types[0].type.name,
                           'base_stat_name': [], 
                           'all_types': [],
@@ -125,13 +128,19 @@ async function getPokemonData(start, amount) {
         getPokemonAllTypes(responseJson, pokemonData); 
         getPokemonAbilities(responseJson, pokemonData); 
         data.push(pokemonData);
+        
 
     }
     
 } 
+
+function pokemonMoves(responseJson, pokemonData) {
+  for (let move of responseJson.moves) {
+        pokemonData.all_moves.push(move.moves.name);
+    }
+}
 function getPokemonAbilities(responseJson, pokemonData) {
     for (let ability of responseJson.abilities) {
-        
         pokemonData.all_ability.push(ability.ability.name);
     }
 }
@@ -145,6 +154,8 @@ function getPokemonAllTypes(responseJson, pokemonData) {
         pokemonData.all_types.push(type.type.name);
     }
 }
+
+
 async function loadPokemon() {
     let lastPokemonIndex = data.length;
     let start = lastPokemonIndex + 1;
