@@ -34,11 +34,11 @@ function emptyCardHTML() {
 function fillCardHTML(ID) {
     const type = handlerPokemonTypeBg(data[ID].type);
     const bg = type + '-bg';
-    const setToFlying = ['beedrill', 'venomoth', 'geodude', 'magnemite', 'magneton', 'gastly', 'haunter', 'koffing', 'weezing', 'mew'];
-    const setNotToFlying =['pidgey', 'spearow', 'farfetchd', 'doduo', 'dodrio']
+    const setToFlying = ['beedrill', 'venomoth', 'geodude', 'magnemite', 'magneton', 'gastly', 'haunter', 'koffing', 'weezing', 'mew']; //add pokemon for flying effect with class"bottom"
+    const setNotToFlying =['pidgey', 'spearow', 'farfetchd', 'doduo', 'dodrio'] //add pokemon to remove flying effect"
 if ( (data[ID].all_types[1] == 'flying' || setToFlying.includes(data[ID].name)) && !setNotToFlying.includes(data[ID].name)) {
         return /*html*/`
-            <div class="imgBx bottom" onclick="openPokeCard(${ID })">
+            <div class="imgBx flying" onclick="openPokeCard(${ID })">
                 <img src="${data[ID].imgAnimated}">
             </div>
             <div class="poke-name ${bg}">
@@ -113,13 +113,13 @@ function templatePokeCubeOfSpecialThreeHTML(ID) {
         <div id="content${ID}-id" class="content">
             <div id="family${ID}-id" class="box mixShadow">
                 <div class="card electric" style="--i:1;">
-                    <div class="imgBx bottom" onclick="openPokeCard(${ID})"><img src="${data[ID].imgAnimated}"></div>
+                    <div class="imgBx flying" onclick="openPokeCard(${ID})"><img src="${data[ID].imgAnimated}"></div>
                     <div class="poke-name electric-bg">
                         <h2>${data[ID].name}</h2>
                     </div>
                 </div>
                 <div class="card fire" style="--i:2;">
-                    <div class="imgBx bottom" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].imgAnimated}"></div>
+                    <div class="imgBx flying" onclick="openPokeCard(${ID + 1})"><img src="${data[ID + 1].imgAnimated}"></div>
                     <div class="poke-name fire-bg">
                         <h2>${data[ID + 1].name}</h2>
                     </div>
@@ -131,7 +131,7 @@ function templatePokeCubeOfSpecialThreeHTML(ID) {
                     </div>
                 </div>
                 <div class="card ice" style="--i:4;">
-                    <div class="imgBx bottom" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].imgAnimated}"></div>
+                    <div class="imgBx flying" onclick="openPokeCard(${ID - 1})"><img src="${data[ID - 1].imgAnimated}"></div>
                     <div class="poke-name ice-bg">
                         <h2>${data[ID - 1].name}</h2>
                     </div>
@@ -193,21 +193,31 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive) {
         background = 'mew'
     return /*html*/`
             <div class=" wrapper">
-            <div class="pokemon-card">
-                <div class="card-header ${background}">
+            <div id="pokemon-card-id" class="pokemon-card">
+                <div  class="card-header ${background}">
                     <div class="menu">
-                        <button onclick="closePokemonCard()">x</button>
+                        <a onclick="closePokeCard()">
+                            <img class="close-btn" src="./img/close.png" alt="">
+                        </a>
                         <h1>${name}</h1>
                         <h2>#${ID}</h2>
                     </div>
                     <div id="types-id" class="subheader-type"></div>
                 </div>
                 <div class="stats-container">
-                    <img src="${img}" alt="">
+                    <img class="pokemon-image" src="${img}" alt="">
                     <div class="toggle-section">
-                        <button onclick="switchPokemon(-1, ${ID})" ${isLeftButtonActive ? 'disabled' : ''}>x</button>
+                        <button onclick="switchPokemon(-1, ${ID}); event.stopPropagation();" ${isLeftButtonActive ? 'disabled' : ''}>
+                            <svg class="svg ${isLeftButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+                            </svg>
+                        </button>
                         <h2>About</h2>
-                        <button onclick="switchPokemon(1, ${ID})" ${isRightButtonActive ? 'disabled' : ''}>x</button>
+                        <button onclick="switchPokemon(1, ${ID}); event.stopPropagation();" ${isRightButtonActive ? 'disabled' : ''}>
+                            <svg class="svg ${isRightButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+                            </svg>
+                        </button>
                     </div>
                     <div class="about-container">
                         <div class="left">

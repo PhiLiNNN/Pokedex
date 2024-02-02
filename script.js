@@ -184,9 +184,21 @@ function openPokeCard(ID) {
     createPokemonType(ID);
     createPokemonAbout(ID);
     renderChart(ID);
+
 }
 
-function closePokemonCard() {
+document.addEventListener("click", function (event) {
+  let headerSection = document.querySelector(".card-header");
+  let statsSection = document.querySelector(".stats-container");
+  let overview = document.getElementById("content-id");
+
+
+  if (!statsSection.contains(event.target) && !headerSection.contains(event.target) && !overview.contains(event.target)) {
+    closePokeCard();
+  }
+});
+
+function closePokeCard() {
     let element = document.getElementById('pokemon-popup-id');
     element.classList.add('d-none');
     document.body.style.overflow = 'auto';
@@ -222,11 +234,11 @@ function switchPokemon(direction, ID) {
 }
 
 function disablePokemonSwitchBtn(ID) {
-    if (data[ID +1] == undefined)
+    if (data[ID + 1 ] == undefined)
         return [false, true];
     if (ID == 0) 
         return [true, false];
     if (ID == 150)
         return [false, true];
-    return  [false, false ]
+    return  [false, false]
 }
