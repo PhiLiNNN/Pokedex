@@ -1,6 +1,5 @@
 function renderChart(ID) {
-    const ctx = document.getElementById('myChart');
-
+    let ctx = document.getElementById('myChart');
     new Chart(ctx, {
         type: 'bar',
         data: {
