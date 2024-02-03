@@ -8,10 +8,12 @@ const familyOfThree = [1,4,7,10,13,16,29,32,43,60,63,66,69,74,92,96,144,147]
 const familyOfFour = [133]
 
 async function init() {
+    hideLoader();
     let start = 1;
     let amount = 28;
-    handlerLoader(start, amount);
+    await handlerLoader(start, amount);
 }
+
 
 async function fetchDataAndRender(start, amount) {
     await getPokemonData(start, amount);
@@ -33,17 +35,22 @@ async function handlerLoader(start, amount) {
 
 
 function showLoader() {
+    toggleScrollbar('hidden');
     const loader = document.querySelector('.loader');
-    if (loader) {
+    if (loader)
         loader.classList.remove('loader-hidden');
-    }
 }
 
+function  toggleScrollbar(value) {
+    document.body.style.overflow = value;
+}
+
+
 function hideLoader() {
+    toggleScrollbar('auto');
     const loader = document.querySelector('.loader');
-    if (loader) {
+    if (loader) 
         loader.classList.add('loader-hidden');
-    }
 }
 
 
@@ -60,6 +67,7 @@ function handlerRotation() {
         rotateCube(55);
     selectCubesToHover();
 }
+
 
 function rotateCube(step) {
     rotateList.slice(step).forEach(value => {
@@ -101,77 +109,101 @@ function createHoverListeners(familyElement, familyID) {
 
 function createPokeCubes(start, amount) {
     let element = document.getElementById('content-id');
-    for (let idx = start; idx < amount; idx++){
-        if(idx == 144) {
-            element.innerHTML += templatePokeCubeOfSpecialThreeHTML(idx);
-            helperFunction(idx);
-        }
-        if(familyOfThree.includes(idx) && idx !==144) {
-            element.innerHTML += templatePokeCubeHTML(idx, 3);
-            helperFunction(idx);
-        }
-        if(familyOfOne.includes(idx)) {
-            element.innerHTML += templatePokeCubeHTML(idx, 1);
-            helperFunction(idx);
-        }
-        if(familyOfTwo.includes(idx)) {
-            element.innerHTML += templatePokeCubeHTML(idx, 2);
-            helperFunction(idx);
-        } 
-        if(familyOfFour.includes(idx)) {
-            element.innerHTML += templatePokeCubeOfSpecialFourHTML(idx);
-            helperFunction(idx);
-        } 
-    }
+    for (let idx = start; idx < amount; idx++)
+        getTemplateForPokeCube(idx, element);
 }
 
-function helperFunction(idx) {
+
+function getTemplateForPokeCube(idx, element) {
+    let templateFunction;
+    if (idx === 144) 
+        templateFunction = templatePokeCubeOfSpecialThreeHTML;
+    else if (familyOfThree.includes(idx) && idx !== 144) 
+        templateFunction = (idx) => templatePokeCubeHTML(idx, 3);
+    else if (familyOfOne.includes(idx)) 
+        templateFunction = (idx) => templatePokeCubeHTML(idx, 1);
+    else if (familyOfTwo.includes(idx)) 
+        templateFunction = (idx) => templatePokeCubeHTML(idx, 2);
+    else if (familyOfFour.includes(idx)) 
+        templateFunction = templatePokeCubeOfSpecialFourHTML;
+    else
+        return;
+    element.innerHTML += templateFunction(idx);
+    updateRotatingCubes(idx);
+}
+
+
+function updateRotatingCubes(idx) {
     rotateList.push(idx);
     counter++;
 }
+
 
 function slider(ID, direction) {
     let box = document.getElementById(`family${ID}-id`);
     let rotationDirection = (direction === 1) ? -90 : 90;
     degrees[ID] = (degrees[ID] || -30) + rotationDirection;
     box.style.transform = `perspective(1000px) rotateY(${degrees[ID]}deg)`;
-
 }
 
 
 async function getPokemonData(start, amount) {
     for (let pokemonID = start; pokemonID <= amount; pokemonID++) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
-        let response = await  fetch(url);
-        let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
-        let responseJson = await response.json();
-        let pokemonData = {'name': responseJson.name,
-                          'img': responseJson.sprites.other.home.front_default,  
-                          'imgAnimated': imgAnimated,
-                          'type':responseJson.types[0].type.name,
-                          'base_stat_name': [], 
-                          'all_types': [],
-                          'all_ability': [],
-                          'physicalStats': [(responseJson.height * 10 + ' cm'),responseJson.weight / 10 + ' Kg']}; 
-        getPokemonStats(responseJson, pokemonData); 
-        getPokemonAllTypes(responseJson, pokemonData); 
-        getPokemonAbilities(responseJson, pokemonData); 
-        data.push(pokemonData);
+        try {
+            let pokemonData = await fetchAndProcessPokemonData(url, pokemonID);
+            data.push(pokemonData);
+        } catch (error) {
+            console.error(`Error fetching data for Pokemon ${pokemonID}:`, error);
+            throw error; 
+        }
     } 
-} 
+}
 
+async function fetchAndProcessPokemonData(url, pokemonID) {
+    let response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    let responseJson = await response.json();
+    let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
+    let pokemonData = {
+        'name': firstLetterUppercase(responseJson.name),
+        'img': responseJson.sprites.other.home.front_default,
+        'imgAnimated': imgAnimated,
+        'type': responseJson.types[0].type.name,
+        'base_stat_name': [], 
+        'all_types': [],
+        'all_ability': [],
+        'physicalStats': [(responseJson.height * 10 + ' cm'), responseJson.weight / 10 + ' Kg']
+    };
+
+    getPokemonStats(responseJson, pokemonData);
+    getPokemonAllTypes(responseJson, pokemonData);
+    getPokemonAbilities(responseJson, pokemonData);
+    return pokemonData;
+}
+
+
+ 
 function pokemonMoves(responseJson, pokemonData) {
     for (let move of responseJson.moves)
         pokemonData.all_moves.push(move.moves.name);
 }
+
+
 function getPokemonAbilities(responseJson, pokemonData) {
     for (let ability of responseJson.abilities) 
         pokemonData.all_ability.push(ability.ability.name);
 }
+
+
 function getPokemonStats(responseJson, pokemonData) {
     for (let stat of responseJson.stats)
         pokemonData.base_stat_name.push(stat.base_stat);
 }
+
+
 function getPokemonAllTypes(responseJson, pokemonData) {
     for (let type of responseJson.types) 
         pokemonData.all_types.push(type.type.name);
@@ -195,23 +227,17 @@ function disableLoadBtn() {
 }
 
 
-
 function openPokeCard(ID) {
     let element = document.getElementById('pokemon-popup-id');
     element.classList.remove('d-none');
-    document.body.style.overflow = 'hidden';
-    
+    toggleScrollbar('hidden');
     const disableBtn = disablePokemonSwitchBtn(ID);
     element.innerHTML = templatePokemonCardHTML(ID, disableBtn[0], disableBtn[1]);
-
     createPokemonAbout(ID);
     createPokemonType(ID);
     renderChart(ID);
     closePokeCardByClick();
-
 }
-
-
 
 
 function closePokeCardByClick() {
@@ -225,19 +251,20 @@ function closePokeCardByClick() {
     });
 }
 
+
 function closePokeCard() {
     let element = document.getElementById('pokemon-popup-id');
     element.classList.add('d-none');
-    document.body.style.overflow = 'auto';
+    toggleScrollbar('auto');
 }
+
 
 function createPokemonType(ID) {
     const element = document.getElementById('types-id');
-    for (let type of data[ID].all_types) {
-        const capitalizedType = firstLetterUppercase(type);
-        element.innerHTML += `<div class="card-type ${data[ID].type + '-bg'}">${capitalizedType}</div>`;
-    }
+    for (let type of data[ID].all_types)
+        element.innerHTML += `<div class="card-type ${data[ID].type + '-bg'}">${type}</div>`;
 }
+
 
 function createPokemonAbout(ID) {
     const element = document.getElementById('abilities-id');
@@ -247,9 +274,11 @@ function createPokemonAbout(ID) {
     }
 }
 
+
 function firstLetterUppercase(word) {
     return word[0].toUpperCase() + word.substring(1)
 }
+
 
 function switchPokemon(direction, ID) {
     if (direction == 1) 
@@ -258,6 +287,7 @@ function switchPokemon(direction, ID) {
         ID -= 1;
     openPokeCard(ID);
 }
+
 
 function disablePokemonSwitchBtn(ID) {
     if (data[ID + 1 ] == undefined)
@@ -268,4 +298,3 @@ function disablePokemonSwitchBtn(ID) {
         return [false, true];
     return  [false, false]
 }
-

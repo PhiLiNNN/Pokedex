@@ -16,7 +16,6 @@
   --fairy: #D685AD;
 }
 
-
 * {
   margin: 0;
   padding: 0;
@@ -26,11 +25,11 @@
 ul, ol {
   list-style: none;
 }
+
 h1,h2,h3,h4,h5,h6 {
   margin-inline-start: 0;
   margin-block-end: 0;
 }
-
 
 a {
   text-decoration: none;
@@ -38,15 +37,11 @@ a {
   cursor: pointer;
 }
 
-
 ::-webkit-scrollbar {
   width: 20px;
-
 }
-
 ::-webkit-scrollbar-track {
   background-color: transparent;
-
 }
 ::-webkit-scrollbar-thumb {
   background-color: #282E3A;
@@ -55,11 +50,9 @@ a {
   background-clip: content-box;
   transition: background-color 0.3s ease-in-out;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background-color: #333d52;
 }
-
 
 button {
   cursor: pointer;
@@ -82,6 +75,9 @@ button {
   padding: 64px;
 }
 
+.wrapper-btn {
+  max-width: 1920px;
+}
 body {
   background: #272727;
   font-family: 'Poppins', sans-serif;
@@ -90,7 +86,6 @@ body {
 .content {
   position: relative;
   margin-bottom: 64px;
-  
 }
 
 .box {
@@ -102,6 +97,7 @@ body {
   transition: 1.5s;
   margin-bottom: 16px;
 }
+
 .box::before {
   content: '';
   position: absolute;
@@ -112,9 +108,8 @@ body {
   filter: blur(50px);
 }
 
-
 .close-btn {
-  width: 40px;
+  width: 20px;
 }
 
 .box .card {
@@ -144,9 +139,11 @@ body {
   transform: translateZ(30px);
   transition: transform 0.3s ease; 
 }
+
 .box .card .flying {
   bottom: 10px !important;
 }
+
 .cursor {
   cursor: default !important;
 }
@@ -155,12 +152,12 @@ body {
   position: absolute;
   width: auto;
   height: auto;
-  
 }
 
 .box .card .imgBx:hover {
   transform: scale(1.1) translateZ(30px);
 }
+
 .box .card .poke-name {
   height: 60px;
   border-radius: 20px;
@@ -168,6 +165,7 @@ body {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
+
 .box .card .poke-name h2 {
   position: relative;
   top: 10px;
@@ -178,7 +176,6 @@ body {
   line-height: 1em;
   text-transform: uppercase;
 }
-
 
 .btns {
   width: 100%;
@@ -204,6 +201,7 @@ body {
 .btns div:active {
   background: #333;
 }
+
 .btns div::before {
   content: '';
   position: absolute;
@@ -223,12 +221,10 @@ body {
   border-right: 3px solid #fff;
 }
 
-
 .water {
   background: url(./img/water_bg.png);
   background-size: cover;
 }
-
 .fire {
   background: url(./img/fire_bg.png);
   background-size: cover;
@@ -300,8 +296,6 @@ body {
   background-position: 50%, 0%;
 }
 
-
-
 .fire-bg {
   background: var(--fire);
 }
@@ -347,11 +341,6 @@ body {
 .dragon-bg {
   background: var(--dragon);
 }
-
-
-
-
-
 
 .fireShadow::before {
   background: var(--fire);
@@ -411,8 +400,6 @@ body {
             linear-gradient(336deg, #8b7b62, rgba(0,0,255,0) 70.71%);
 }
 
-
-
 .loadButton {
   background-color: rgb(98, 95, 95);
   color: white;
@@ -424,6 +411,7 @@ body {
   margin: 32px;
   cursor: pointer;
 }
+
 .loadButton:active {
   background: #333;
 }
@@ -448,15 +436,14 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .menu {
-  margin-top: 16px;
+  margin-block: 16px;
   display: flex;
   justify-content: space-around;
-
 }
+
 .menu h1{
   font-size: 24px;
   font-weight: 600;
@@ -467,12 +454,14 @@ body {
   justify-content: center;
   gap: 8px;
 }
+
 .card-type {
   padding: 4px 12px;
   border-radius: 20px;
   font-weight: bold;
   font-size: 16px;
 }
+
 .card-header {
   border-radius: 20px;
   color: black;
@@ -480,6 +469,7 @@ body {
   width: 50%;
   height: 350px;
 }
+
 .stats-container {
   background: white;
   width: 50%;
@@ -494,10 +484,9 @@ body {
   height: 400px;
 }
 
-
 .pokemon-image {
-  width: 180px;
-  margin-top: -165px;
+  width: 250px;
+  margin-top: -220px;
   filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.646));
 }
 
@@ -509,6 +498,7 @@ body {
   gap: 90px;
   font-size: 20px;
 }
+
 .svg {
     width: 64px;
     height: 40px;
@@ -516,7 +506,6 @@ body {
     border-radius: 20px;
     padding: 8px;
 }
-
 
 .svg-disabled {
   cursor: default;
@@ -532,14 +521,13 @@ body {
   height: 40px;
 }
 
-
-
 .about-container {
   display: flex;
   justify-content: center;
   gap: 24px;
   margin-bottom: 16px;
 }
+
 .left {
   color: rgb(141, 141, 141);
 }
@@ -547,7 +535,6 @@ body {
 .stats-container h2 {
   font-size: 20px;
 }
-
 
 .loader {
   position: fixed;
@@ -558,7 +545,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2f2f2f;
+  background: #2f2f2fd6;
   transition: opacity 0.75s, visibility  0.75s;
 }
 
@@ -577,18 +564,19 @@ body {
   animation: loading 0.75s ease infinite;
 }
 
-
 .orden-container {
   display: flex;
   justify-content: center;
   gap: 35px;
   margin-block: 64px;
 }
+
 .orden-left,
 .orden-right {
   display: flex;
   gap: 35px;
 }
+
 .orden-container img {
   width: 60px;
   height: 60px;
@@ -606,6 +594,7 @@ body {
 .header {
   margin-top: 32px;
 }
+
 .header img {
   width: 500px;
 }
@@ -616,7 +605,6 @@ body {
   color: white;
   margin-top: -80px;
   letter-spacing: 8px;
-  
 }
 
 @keyframes loading {
@@ -627,7 +615,6 @@ body {
     transform: rotate(1turn);
   }
 }
-
 
 @media (max-width: 763px) {
   .content {
@@ -644,20 +631,15 @@ body {
     transform:  translateY(170px) rotateX(90deg) scale(1.1);
     filter: blur(50px);
   }
-  
   .box .card {
     width: 100%;
     height: 220px;
     transform: rotateY(calc(var(--i)  * 90deg)) translateZ(75px);
   }
-
   .box .card .imgBx {
     width: 100%;
     height: 170px;
   }
-  
-
-
   .box .card .poke-name {
     height: 50px;
   }
@@ -676,12 +658,10 @@ body {
     margin-block: 0px;
     gap: 16px;
   }
-
   .orden-left,
   .orden-right {
     gap: 16px;
   }
-  
   .orden-container img {
     width: 40px;
     height: 40px;
@@ -691,18 +671,14 @@ body {
     font-size: 24px;
     margin-top: -70px;
     letter-spacing: 6px;
-    
   }
-  
-
-
 }
+
 @media (max-width: 600px) {
   .orden-container {
     flex-direction: column;
     margin-top: 56px
   }
-
   .orden-container img {
     width: 40px;
     height: 40px;
@@ -716,7 +692,6 @@ body {
   .orden-6 { transform: translateY(0); }
   .orden-7 { transform: translateY(0); }
   .orden-8 { transform: translateY(0); }
-  
   .header img {
     width: 350px;
   }
@@ -724,11 +699,8 @@ body {
     font-size: 24px;
     margin-top: -140px;
     letter-spacing: 6px;
-    
   }
 }
-
-
 
 @media (max-width: 400px) {
   .pokemon-card {
@@ -746,10 +718,6 @@ body {
   }
 }
 
-.d-none {
-  display: none;
-}
-
 @media (max-height: 710px) {
   .card-header {
     height: 300px;
@@ -757,12 +725,15 @@ body {
   .stats-container {
     height: 380px;
   }
-
+  .pokemon-image {
+    width: 190px;
+  }
 }
+
 @media (max-height: 646px) {
   .pokemon-image {
-    margin-top: -100px;
-    width: 120px;
+    margin-top: -130px;
+    width: 150px;
   }
   .card-header {
     height: 260px;
@@ -771,6 +742,7 @@ body {
     height: 360px;
   }
 }
+
 @media (max-height: 588px) {
   .card-header {
     height: 200px;
@@ -785,18 +757,19 @@ body {
     filter: 0;
   }
 }
+
 @media (max-height: 518px) {
   .stats-container {
     height: 200px;
   }
-
 }
 
 @media (max-height: 414px) {
   .stats-container {
     height: 150px;
   }
-
 }
 
-
+.d-none {
+  display: none;
+}

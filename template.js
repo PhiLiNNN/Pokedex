@@ -20,6 +20,7 @@ let thirdImgElement;
 let secondImgElement;
 let firstImgElement;
 
+
 function handlerPokemonTypeBg(type) {
     if (type in typeBackgrounds) 
         return typeBackgrounds[type];
@@ -27,9 +28,11 @@ function handlerPokemonTypeBg(type) {
         return type;
 }
 
+
 function emptyCardHTML() {
     return /*html*/ `<div class="imgBx cursor"></div>` ;
 }
+
 
 function fillCardHTML(ID) {
     const type = handlerPokemonTypeBg(data[ID].type);
@@ -74,6 +77,7 @@ function checkFamilySize(ID, family) {
         secondImgElement = emptyCardHTML();
     }
 }
+
 
 function templatePokeCubeHTML(ID, family) {
     let type = handlerPokemonTypeBg(data[ID - 1].type);
@@ -183,6 +187,7 @@ function templatePokeCubeOfSpecialFourHTML(ID) {
     `;
 }
 
+
 function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
     let name = data[ID].name;
     let background  = data[ID].type;
@@ -197,7 +202,7 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
                 <div  class="card-header ${background}">
                     <div class="menu">
                         <a onclick="closePokeCard()">
-                            <img class="close-btn" src="./img/close.png" alt="" >
+                            <img class="close-btn" src="./img/close.svg" alt="" >
                         </a>
                         <h1>${name}</h1>
                         <h2>#${ID}</h2>
@@ -220,7 +225,7 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
                                 <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
                             </svg>
                         </button>
-                    </div>
+                    </div>  
                     <div class="about-container">
                         <div class="left">
                             <div>Height</div>
@@ -236,6 +241,7 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
         </div>
     `;
 }
+
 
 function templatePokemonPhysicalStatsHTML(height, Weight) {
     return /*html*/`
