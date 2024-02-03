@@ -9,11 +9,41 @@ const familyOfFour = [133]
 
 async function init() {
     let start = 1;
-    let amount = 28
-    await getPokemonData(start,amount);
+    let amount = 28;
+    handlerLoader(start, amount);
+}
+
+async function fetchDataAndRender(start, amount) {
+    await getPokemonData(start, amount);
     createPokeCubes(start, amount);
     handlerRotation();
-    
+}
+
+
+async function handlerLoader(start, amount) {
+    showLoader();
+    try {
+        await fetchDataAndRender(start, amount);
+    } catch (error) {
+        console.error("Error loading Pokemon data:", error);
+    } finally {
+        hideLoader();
+    }
+}
+
+
+function showLoader() {
+    const loader = document.querySelector('.loader');
+    if (loader) {
+        loader.classList.remove('loader-hidden');
+    }
+}
+
+function hideLoader() {
+    const loader = document.querySelector('.loader');
+    if (loader) {
+        loader.classList.add('loader-hidden');
+    }
 }
 
 
@@ -115,7 +145,6 @@ async function getPokemonData(start, amount) {
         let response = await  fetch(url);
         let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
         let responseJson = await response.json();
-        
         let pokemonData = {'name': responseJson.name,
                           'img': responseJson.sprites.other.home.front_default,  
                           'imgAnimated': imgAnimated,
@@ -123,80 +152,78 @@ async function getPokemonData(start, amount) {
                           'base_stat_name': [], 
                           'all_types': [],
                           'all_ability': [],
-                          'physicalStats': [responseJson.height,responseJson.weight]}; 
+                          'physicalStats': [(responseJson.height * 10 + ' cm'),responseJson.weight / 10 + ' Kg']}; 
         getPokemonStats(responseJson, pokemonData); 
         getPokemonAllTypes(responseJson, pokemonData); 
         getPokemonAbilities(responseJson, pokemonData); 
         data.push(pokemonData);
-        
-
-    }
-    
+    } 
 } 
 
 function pokemonMoves(responseJson, pokemonData) {
-  for (let move of responseJson.moves) {
+    for (let move of responseJson.moves)
         pokemonData.all_moves.push(move.moves.name);
-    }
 }
 function getPokemonAbilities(responseJson, pokemonData) {
-    for (let ability of responseJson.abilities) {
+    for (let ability of responseJson.abilities) 
         pokemonData.all_ability.push(ability.ability.name);
-    }
 }
 function getPokemonStats(responseJson, pokemonData) {
-    for (let stat of responseJson.stats) {
+    for (let stat of responseJson.stats)
         pokemonData.base_stat_name.push(stat.base_stat);
-    }
 }
 function getPokemonAllTypes(responseJson, pokemonData) {
-    for (let type of responseJson.types) {
+    for (let type of responseJson.types) 
         pokemonData.all_types.push(type.type.name);
-    }
 }
 
 
-async function loadPokemon() {
+async function loadMorePokemon() {
+    let stepsOf = 30;
     let lastPokemonIndex = data.length;
     let start = lastPokemonIndex + 1;
-    let amount = start + 30;
-    await getPokemonData(start,amount);
-    createPokeCubes(start, amount);
+    let amount = start + stepsOf;
+    handlerLoader(start, amount);
     disableLoadBtn();
-    handlerRotation();
 }
 
 
 function disableLoadBtn() {
     let element = document.getElementById('loadButton');
-    if (data.length == 152) 
+    if (data.length == 121) 
         element.classList.add('d-none');
 }
+
 
 
 function openPokeCard(ID) {
     let element = document.getElementById('pokemon-popup-id');
     element.classList.remove('d-none');
     document.body.style.overflow = 'hidden';
+    
     const disableBtn = disablePokemonSwitchBtn(ID);
     element.innerHTML = templatePokemonCardHTML(ID, disableBtn[0], disableBtn[1]);
-    
-    createPokemonType(ID);
+
     createPokemonAbout(ID);
+    createPokemonType(ID);
     renderChart(ID);
+    closePokeCardByClick();
 
 }
 
-document.addEventListener("click", function (event) {
-  let headerSection = document.querySelector(".card-header");
-  let statsSection = document.querySelector(".stats-container");
-  let overview = document.getElementById("content-id");
 
 
-  if (!statsSection.contains(event.target) && !headerSection.contains(event.target) && !overview.contains(event.target)) {
-    closePokeCard();
-  }
-});
+
+function closePokeCardByClick() {
+    document.addEventListener("click", function (event) {
+        let headerSection = document.querySelector(".card-header");
+        let statsSection = document.querySelector(".stats-container");
+        let overview = document.getElementById("content-id");
+        if (!statsSection.contains(event.target) && !headerSection.contains(event.target) && !overview.contains(event.target)) {
+            closePokeCard();
+        }
+    });
+}
 
 function closePokeCard() {
     let element = document.getElementById('pokemon-popup-id');
@@ -230,7 +257,6 @@ function switchPokemon(direction, ID) {
     else if (direction == -1) 
         ID -= 1;
     openPokeCard(ID);
-
 }
 
 function disablePokemonSwitchBtn(ID) {
@@ -242,3 +268,4 @@ function disablePokemonSwitchBtn(ID) {
         return [false, true];
     return  [false, false]
 }
+

@@ -183,7 +183,7 @@ function templatePokeCubeOfSpecialFourHTML(ID) {
     `;
 }
 
-function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive) {
+function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
     let name = data[ID].name;
     let background  = data[ID].type;
     let img = data[ID].img;
@@ -197,7 +197,7 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive) {
                 <div  class="card-header ${background}">
                     <div class="menu">
                         <a onclick="closePokeCard()">
-                            <img class="close-btn" src="./img/close.png" alt="">
+                            <img class="close-btn" src="./img/close.png" alt="" >
                         </a>
                         <h1>${name}</h1>
                         <h2>#${ID}</h2>
@@ -205,16 +205,18 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive) {
                     <div id="types-id" class="subheader-type"></div>
                 </div>
                 <div class="stats-container">
-                    <img class="pokemon-image" src="${img}" alt="">
+                    <div>
+                        <img class="pokemon-image" src="${img}" alt="">
+                    </div>
                     <div class="toggle-section">
                         <button onclick="switchPokemon(-1, ${ID}); event.stopPropagation();" ${isLeftButtonActive ? 'disabled' : ''}>
-                            <svg class="svg ${isLeftButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <svg class="svg ${data[ID].type}-bg ${isLeftButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
                             </svg>
                         </button>
                         <h2>About</h2>
                         <button onclick="switchPokemon(1, ${ID}); event.stopPropagation();" ${isRightButtonActive ? 'disabled' : ''}>
-                            <svg class="svg ${isRightButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <svg class="svg ${data[ID].type}-bg ${isRightButtonActive ? 'svg-disabled' : ''}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
                             </svg>
                         </button>

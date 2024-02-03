@@ -38,6 +38,29 @@ a {
   cursor: pointer;
 }
 
+
+::-webkit-scrollbar {
+  width: 20px;
+
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+
+}
+::-webkit-scrollbar-thumb {
+  background-color: #282E3A;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #333d52;
+}
+
+
 button {
   cursor: pointer;
 }
@@ -487,10 +510,13 @@ body {
   font-size: 20px;
 }
 .svg {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 40px;
     fill: black;
+    border-radius: 20px;
+    padding: 8px;
 }
+
 
 .svg-disabled {
   cursor: default;
@@ -523,8 +549,84 @@ body {
 }
 
 
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:   100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2f2f2f;
+  transition: opacity 0.75s, visibility  0.75s;
+}
+
+.loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: '';
+  width: 75px;
+  height: 75px;
+  border: 15px  solid #dddddd;
+  border-top-color: #110312;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
 
 
+.orden-container {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  margin-block: 64px;
+}
+.orden-left,
+.orden-right {
+  display: flex;
+  gap: 35px;
+}
+.orden-container img {
+  width: 60px;
+  height: 60px;
+}
+
+.orden-1 { transform: translateY(30px); }
+.orden-2 { transform: translateY(-10px); }
+.orden-3 { transform: translateY(-45px); }
+.orden-4 { transform: translateY(-65px); }
+.orden-5 { transform: translateY(-65px); }
+.orden-6 { transform: translateY(-45px); }
+.orden-7 { transform: translateY(-10px); }
+.orden-8 { transform: translateY(30px); }
+
+.header {
+  margin-top: 32px;
+}
+.header img {
+  width: 500px;
+}
+
+.header-text p {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin-top: -80px;
+  letter-spacing: 8px;
+  
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
 
 
 @media (max-width: 763px) {
@@ -554,11 +656,8 @@ body {
     height: 170px;
   }
   
-  .box .card .imgBx img {
-    width: 55%;
-    height: 55%;
-    
-  }
+
+
   .box .card .poke-name {
     height: 50px;
   }
@@ -573,7 +672,64 @@ body {
   .pokemon-card .card-header .menu {
     gap: 80px;
   }
+  .orden-container {
+    margin-block: 0px;
+    gap: 16px;
+  }
+
+  .orden-left,
+  .orden-right {
+    gap: 16px;
+  }
+  
+  .orden-container img {
+    width: 40px;
+    height: 40px;
+    margin-block: 56px;
+  }
+  .header-text p {
+    font-size: 24px;
+    margin-top: -70px;
+    letter-spacing: 6px;
+    
+  }
+  
+
+
 }
+@media (max-width: 600px) {
+  .orden-container {
+    flex-direction: column;
+    margin-top: 56px
+  }
+
+  .orden-container img {
+    width: 40px;
+    height: 40px;
+    margin-block: 0;
+  }
+  .orden-1 { transform: translateY(0); }
+  .orden-2 { transform: translateY(0); }
+  .orden-3 { transform: translateY(0); }
+  .orden-4 { transform: translateY(0); }
+  .orden-5 { transform: translateY(0); }
+  .orden-6 { transform: translateY(0); }
+  .orden-7 { transform: translateY(0); }
+  .orden-8 { transform: translateY(0); }
+  
+  .header img {
+    width: 350px;
+  }
+  .header-text p {
+    font-size: 24px;
+    margin-top: -140px;
+    letter-spacing: 6px;
+    
+  }
+}
+
+
+
 @media (max-width: 400px) {
   .pokemon-card {
     min-width: 630px;
@@ -584,6 +740,9 @@ body {
   }
   .toggle-section {
     gap: 80px;
+  }
+  .header img {
+    width: 300px;
   }
 }
 
