@@ -62,14 +62,10 @@ header {
   height: 60px;
 }
 
-.orden-1 { transform: translateY(30px); }
-.orden-2 { transform: translateY(-10px); }
-.orden-3 { transform: translateY(-45px); }
-.orden-4 { transform: translateY(-65px); }
-.orden-5 { transform: translateY(-65px); }
-.orden-6 { transform: translateY(-45px); }
-.orden-7 { transform: translateY(-10px); }
-.orden-8 { transform: translateY(30px); }
+.orden-1, .orden-8 { transform: translateY(30px); }
+.orden-2, .orden-7 { transform: translateY(-10px); }
+.orden-3, .orden-6 { transform: translateY(-45px); }
+.orden-4, .orden-5 { transform: translateY(-65px); }
 
 .logo {
   margin-top: 32px;
@@ -98,14 +94,14 @@ header {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #110312ca;
+  background-color: #282E3A;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
   transition: background-color 0.3s ease-in-out;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #2c082ecc;
+  background-color: #333d52;
 }
 
 button {
@@ -132,6 +128,7 @@ button {
 .wrapper-btn {
   max-width: 1920px;
 }
+
 body {
   background: #272727;
   font-family: 'Poppins', sans-serif;
@@ -350,95 +347,64 @@ body {
   background-position: 50%, 0%;
 }
 
+.fireShadow::before,
 .fire-bg {
   background: var(--fire);
 }
+.waterShadow::before,
 .water-bg {
   background: var(--water);
 }
+.grassShadow::before,
 .grass-bg {
   background: var(--grass);
 }
+.bugShadow::before,
 .bug-bg {
   background: var(--bug);
 }
+.normalShadow::before,
 .normal-bg {
   background: var(--normal);
 }
+.electricShadow::before,
 .electric-bg {
   background: var(--electric);
 }
+.poisonShadow::before,
 .poison-bg {
   background: var(--poison);
 }
+.psychicShadow::before,
 .psychic-bg {
   background: var(--psychic);
 }
+.fightingShadow::before,
 .fighting-bg {
   background: var(--fighting);
 }
+.rockShadow::before,
 .rock-bg {
   background: var(--rock);
 }
+.ghostShadow::before,
 .ghost-bg {
   background: var(--ghost);
 }
+.groundShadow::before,
 .ground-bg {
   background: var(--ground);
 }
+.fairyShadow::before,
 .fairy-bg {
-  background: var(--fairy);;
+  background: var(--fairy);
 }
+.iceShadow::before,
 .ice-bg {
   background: var(--ice);
 }
+.dragonShadow::before,
 .dragon-bg {
-  background: var(--dragon);
-}
-
-.fireShadow::before {
-  background: var(--fire);
-}
-.waterShadow::before {
-  background: var(--water);
-}
-.grassShadow::before {
-  background: var(--grass);
-}
-.bugShadow::before {
-  background: var(--bug);
-}
-.normalShadow::before {
-  background: var(--normal);
-}
-.electricShadow::before {
-  background: var(--electric);
-}
-.poisonShadow::before {
-  background: var(--poison);
-}
-.psychicShadow::before {
-  background: var(--psychic);
-}
-.fightingShadow::before {
-  background: var(--fighting);
-}
-.rockShadow::before {
-  background: var(--rock);
-}
-.ghostShadow::before {
-  background: var(--ghost);
-}
-.groundShadow::before {
-  background: var(--ground);
-}
-.fairyShadow::before {
-  background: var(--fairy);
-}
-.iceShadow::before {
-  background: var(--ice);
-}
-.dragonShadow::before {
   background: var(--dragon);
 }
 
@@ -472,7 +438,6 @@ body {
 
 .popup-bg {
   overflow: hidden;
-  height: 100vh;
   background: #110312;
   position: fixed;
   left: 0;
@@ -537,8 +502,6 @@ body {
   border-radius: 20px;
   height: 400px;
 }
-
-
 
 .pokemon-image {
   width: 250px;
@@ -620,8 +583,6 @@ body {
   animation: loading 0.75s ease infinite;
 }
 
-
-
 @keyframes loading {
   from {
     transform: rotate(0turn);
@@ -663,10 +624,18 @@ body {
     font-size: 14px;
   }
   .pokemon-card {
-    min-width: 800px;
-    width: clamp(800px, 100%, 1920px);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
-  .pokemon-card .card-header .menu {
+  .card-header,
+  .stats-container {
+    width: 100%;
+  }
+  .menu {
     gap: 80px;
   }
   .orden-container {
@@ -687,6 +656,9 @@ body {
     margin-top: -70px;
     letter-spacing: 6px;
   }
+  .loadButton {
+    margin: 64px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -702,14 +674,10 @@ body {
   .header-text {
     margin-bottom: 32px;
   }
-  .orden-1 { transform: translateY(0); }
-  .orden-2 { transform: translateY(0); }
-  .orden-3 { transform: translateY(0); }
-  .orden-4 { transform: translateY(0); }
-  .orden-5 { transform: translateY(0); }
-  .orden-6 { transform: translateY(0); }
-  .orden-7 { transform: translateY(0); }
-  .orden-8 { transform: translateY(0); }
+  .orden-1, .orden-2, .orden-3, .orden-4, 
+  .orden-5, .orden-6, .orden-7, .orden-8 { 
+    transform: translateY(0); 
+  }
   .logo img {
     width: 350px;
   }
@@ -720,77 +688,44 @@ body {
   }
 }
 
-@media (max-width: 400px) {
-  .pokemon-card {
-    min-width: 630px;
-    width: clamp(630px, 100%, 1920px);
-  }
-  .pokemon-card .card-header .menu {
-    gap: 60px;
-  }
+@media (max-width: 375px) {
   .toggle-section {
     gap: 60px;
-  }
-  .logo img {
-    width: 300px;
-  }
-}
-
-@media (max-height: 710px) {
-  .card-header {
-    height: 300px;
-  }
-  .stats-container {
-    height: 380px;
-  }
-  .pokemon-image {
-    width: 190px;
+  } 
+  .menu {
+    gap: 60px;
   }
 }
 
-@media (max-height: 646px) {
+@media (max-height: 707px) {
   .pokemon-image {
-    margin-top: -130px;
     width: 150px;
   }
-  .card-header {
-    height: 260px;
+  .pokemon-card {
+    height: 103vh;
   }
-  .stats-container {
-    height: 360px;
+  .stats-container,
+  .card-header {
+    border-radius: 0;
   }
 }
 
-@media (max-height: 588px) {
+@media (max-height: 605px) {
+  .pokemon-image {
+    margin-top: 0px;
+  }
   .card-header {
-    height: 200px;
+    height: 50vh;
   }
   .stats-container {
     overflow: auto;
-    height: 350px;
-  }
-  .pokemon-image {
-    width: 90px;
-    margin-top: 0px;
-    filter: 0;
-  }
-  .toggle-section {
-    gap: 50px;
-  }
-  .stats {
-    width: 295px;
+    height: 60vh;
   }
 }
 
-@media (max-height: 518px) {
-  .stats-container {
-    height: 200px;
-  }
-}
-
-@media (max-height: 414px) {
-  .stats-container {
-    height: 150px;
+ @media (max-height: 476px) {
+  .card-header {
+    height: 250px;
   }
 }
 

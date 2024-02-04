@@ -9,8 +9,8 @@ const familyOfFour = [133]
 
 async function init() {
     hideLoader();
-    let start = 1;
-    let amount = 28;
+    const start = 1;
+    const amount = 28;
     await handlerLoader(start, amount);
 }
 
@@ -162,9 +162,8 @@ async function getPokemonData(start, amount) {
 
 async function fetchAndProcessPokemonData(url, pokemonID) {
     let response = await fetch(url);
-    if (!response.ok) {
+    if (!response.ok) 
         throw new Error(`HTTP error! Status: ${response.status}`);
-    }
     let responseJson = await response.json();
     let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
     let pokemonData = {
