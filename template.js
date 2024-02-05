@@ -37,9 +37,9 @@ function emptyCardHTML() {
 function fillCardHTML(ID) {
     const type = handlerPokemonTypeBg(data[ID].type);
     const bg = type + '-bg';
-    const setToFlying = ['beedrill', 'venomoth', 'geodude', 'magnemite', 'magneton', 'gastly', 'haunter', 'koffing', 'weezing', 'mew']; //add pokemon for flying effect with class"bottom"
-    const setNotToFlying =['pidgey', 'spearow', 'farfetchd', 'doduo', 'dodrio'] //add pokemon to remove flying effect"
-if ( (data[ID].all_types[1] == 'flying' || setToFlying.includes(data[ID].name)) && !setNotToFlying.includes(data[ID].name)) {
+    const setToFlying = ['Beedrill', 'Venomoth', 'Geodude', 'Magnemite', 'Magneton', 'Gastly', 'Haunter', 'Koffing', 'Weezing', 'Mew']; //add pokemon for flying effect with class"bottom"
+    const setNotToFlying =['Pidgey', 'Spearow', 'Farfetchd', 'Doduo', 'Dodrio'] //add pokemon to remove flying effect"
+    if ((data[ID].all_types[1] == 'flying' || setToFlying.includes(data[ID].name)) && !setNotToFlying.includes(data[ID].name)) {
         return /*html*/`
             <div class="imgBx flying" onclick="openPokeCard(${ID })">
                 <img src="${data[ID].imgAnimated}">
@@ -189,7 +189,6 @@ function templatePokeCubeOfSpecialFourHTML(ID) {
 
 
 function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
-    let whiteMenu = false;
     let name = data[ID].name;
     let background  = data[ID].type;
     let img = data[ID].img;
@@ -197,8 +196,6 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
         background = 'mewtow'
     if(ID == 150) 
         background = 'mew'
-    if(data[ID].type == 'psychic') 
-        whiteMenu = true;
     return /*html*/`
             <div class=" wrapper">
             <div id="pokemon-card-id" class="pokemon-card">

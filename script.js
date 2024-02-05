@@ -18,7 +18,6 @@ async function init() {
 
 async function fetchDataAndRender(start, amount) {
     await getPokemonData(start, amount);
-    await familycoun(start, amount);
     createPokeCubes(start, amount);
     handlerRotation();
 }
@@ -152,8 +151,9 @@ function slider(ID, direction) {
 async function getPokemonData(start, amount) {
     for (let pokemonID = start; pokemonID <= amount; pokemonID++) {
         let url = 'https://pokeapi.co/api/v2/pokemon/' + pokemonID;
+        let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
         try {
-            let pokemonData = await fetchAndProcessPokemonData(url, pokemonID);
+            let pokemonData = await fetchAndProcessPokemonData(url, imgAnimated);
             data.push(pokemonData);
         } catch (error) {
             console.error(`Error fetching data for Pokemon ${pokemonID}:`, error);
@@ -163,48 +163,10 @@ async function getPokemonData(start, amount) {
 }
  
 
-
-async function familycoun(start, amount) {
-    for (let index = start; index <= amount; index++) {
-        let url = `https://pokeapi.co/api/v2/pokemon-species/${index}/`;
-        let response = await fetch(url);
-        let responseJson = await response.json();
-
-        // Check if evolution_chain is not null
-        console.log(responseJson.id);
-        let evolutionChainUrl = responseJson.evolution_chain.url;
-        let chainResponse = await fetch(evolutionChainUrl);
-        let chainResponseJson = await chainResponse.json();
-        liste.push(evolutionChainUrl);
-        console.log(liste);
-    }
-    let newliste = []
-    let counter = 1;
-    for (let idx = 0; idx < liste.length; idx++) {
-        
-        if (liste[idx] == liste[idx + 1]) {
-            counter++
-            console.log('counter',counter);
-        }
-        else  {
-            newliste.push(counter);
-            counter = 1;
-        }   
-    }
-    console.log(newliste);
-}
-
-familycoun();
-
-
-async function fetchAndProcessPokemonData(url, pokemonID) {
+async function fetchAndProcessPokemonData(url, imgAnimated) {
     let response = await fetch(url);
-    if (!response.ok) 
-        throw new Error(`HTTP error! Status: ${response.status}`);
     let responseJson = await response.json();
-    let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
 
-    
     let pokemonData = {
         'name': firstLetterUppercase(responseJson.name),
         'img': responseJson.sprites.other.home.front_default,
@@ -213,9 +175,8 @@ async function fetchAndProcessPokemonData(url, pokemonID) {
         'base_stat_name': [], 
         'all_types': [],
         'all_ability': [],
-        'physicalStats': [(responseJson.height * 10 + ' cm'), responseJson.weight / 10 + ' Kg']
+        'physicalStats': [(responseJson.height * 10 + ' cm'), responseJson.weight / 10 + ' Kg'],
     };
-
     getPokemonStats(responseJson, pokemonData);
     getPokemonAllTypes(responseJson, pokemonData);
     getPokemonAbilities(responseJson, pokemonData);
