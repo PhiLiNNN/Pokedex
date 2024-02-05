@@ -1,5 +1,6 @@
 let degrees = {};
 let data = []
+let liste = [];
 let rotateList = [];
 let counter = 0;
 const familyOfOne = [83,95,108,113,114,115,122,123,124,125,126,127,128,131,132,137,142,143,150,151]
@@ -17,6 +18,7 @@ async function init() {
 
 async function fetchDataAndRender(start, amount) {
     await getPokemonData(start, amount);
+    await familycoun(start, amount);
     createPokeCubes(start, amount);
     handlerRotation();
 }
@@ -159,6 +161,41 @@ async function getPokemonData(start, amount) {
         }
     } 
 }
+ 
+
+
+async function familycoun(start, amount) {
+    for (let index = start; index <= amount; index++) {
+        let url = `https://pokeapi.co/api/v2/pokemon-species/${index}/`;
+        let response = await fetch(url);
+        let responseJson = await response.json();
+
+        // Check if evolution_chain is not null
+        console.log(responseJson.id);
+        let evolutionChainUrl = responseJson.evolution_chain.url;
+        let chainResponse = await fetch(evolutionChainUrl);
+        let chainResponseJson = await chainResponse.json();
+        liste.push(evolutionChainUrl);
+        console.log(liste);
+    }
+    let newliste = []
+    let counter = 1;
+    for (let idx = 0; idx < liste.length; idx++) {
+        
+        if (liste[idx] == liste[idx + 1]) {
+            counter++
+            console.log('counter',counter);
+        }
+        else  {
+            newliste.push(counter);
+            counter = 1;
+        }   
+    }
+    console.log(newliste);
+}
+
+familycoun();
+
 
 async function fetchAndProcessPokemonData(url, pokemonID) {
     let response = await fetch(url);
@@ -166,6 +203,8 @@ async function fetchAndProcessPokemonData(url, pokemonID) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     let responseJson = await response.json();
     let imgAnimated = `https://raw.githubusercontent.com/geekygreek7/animated-pokemon-gifs/master/${pokemonID}.gif`;
+
+    
     let pokemonData = {
         'name': firstLetterUppercase(responseJson.name),
         'img': responseJson.sprites.other.home.front_default,
