@@ -104,6 +104,7 @@ header {
   background-color: #333d52;
 }
 
+
 button {
   cursor: pointer;
 }
@@ -160,7 +161,8 @@ body {
 }
 
 .close-btn {
-  width: 20px;
+  width: 32px;
+  margin-top: 4px;
 }
 
 .box .card {
@@ -420,6 +422,8 @@ body {
             linear-gradient(336deg, #8b7b62, rgba(0,0,255,0) 70.71%);
 }
 
+
+
 .loadButton {
   background-color: rgb(98, 95, 95);
   color: white;
@@ -461,12 +465,16 @@ body {
   margin-block: 16px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
-.menu h1{
-  font-size: 24px;
+
+.menu h1,
+.menu h2 {
+  font-size: 32px;
   font-weight: 600;
 }
+
 
 .subheader-type {
   display: flex;
@@ -477,8 +485,7 @@ body {
 .card-type {
   padding: 4px 12px;
   border-radius: 20px;
-  font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .card-header {
@@ -533,6 +540,7 @@ body {
 
 .toggle-section button {
   border: 0;
+  background: transparent;
 } 
 
 .toggle-section img {
@@ -659,6 +667,13 @@ body {
   .loadButton {
     margin: 64px;
   }
+  .close-btn {
+    width: 24px;
+  }
+  .menu  h2, 
+  .menu  h1 {
+    font-size: 32px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -688,12 +703,12 @@ body {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 439px) {
   .toggle-section {
     gap: 60px;
   } 
   .menu {
-    gap: 60px;
+    gap: 0px;
   }
 }
 
@@ -720,6 +735,7 @@ body {
   .stats-container {
     overflow: auto;
     height: 60vh;
+    scrollbar-gutter: stable;
   }
 }
 

@@ -189,6 +189,7 @@ function templatePokeCubeOfSpecialFourHTML(ID) {
 
 
 function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
+    let whiteMenu = false;
     let name = data[ID].name;
     let background  = data[ID].type;
     let img = data[ID].img;
@@ -196,16 +197,18 @@ function templatePokemonCardHTML(ID, isLeftButtonActive, isRightButtonActive,) {
         background = 'mewtow'
     if(ID == 150) 
         background = 'mew'
+    if(data[ID].type == 'psychic') 
+        whiteMenu = true;
     return /*html*/`
             <div class=" wrapper">
             <div id="pokemon-card-id" class="pokemon-card">
                 <div  class="card-header ${background}">
-                    <div class="menu">
-                        <a onclick="closePokeCard()">
+                    <div class="menu ">
+                        <a  onclick="closePokeCard()">
                             <img class="close-btn" src="./img/close.svg" alt="" >
                         </a>
                         <h1>${name}</h1>
-                        <h2>#${ID}</h2>
+                        <h2>#${ID + 1}</h2>
                     </div>
                     <div id="types-id" class="subheader-type"></div>
                 </div>
