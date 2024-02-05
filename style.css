@@ -68,11 +68,13 @@ header {
 .orden-4, .orden-5 { transform: translateY(-65px); }
 
 .logo {
+  display: flex;
+  justify-content: center;
   margin-top: 32px;
 }
 
 .logo img {
-  width: 500px;
+  width: 90%;
 }
 
 .header-text {
@@ -693,9 +695,7 @@ body {
   .orden-5, .orden-6, .orden-7, .orden-8 { 
     transform: translateY(0); 
   }
-  .logo img {
-    width: 350px;
-  }
+
   .header-text p {
     font-size: 24px;
     margin-top: -140px;
@@ -717,7 +717,7 @@ body {
     width: 150px;
   }
   .pokemon-card {
-    height: 103vh;
+    height: 100vh;
   }
   .stats-container,
   .card-header {
@@ -729,19 +729,15 @@ body {
   .pokemon-image {
     margin-top: 0px;
   }
-  .card-header {
-    height: 50vh;
-  }
   .stats-container {
     overflow: auto;
-    height: 60vh;
     scrollbar-gutter: stable;
   }
 }
 
  @media (max-height: 476px) {
   .card-header {
-    height: 250px;
+    height: 800px;
   }
 }
 
