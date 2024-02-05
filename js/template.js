@@ -15,6 +15,8 @@ const typeBackgrounds = {
     'ice': 'ice',
     'dragon': 'dragon'
 };
+const setToFlying = ['Beedrill', 'Venomoth', 'Geodude', 'Magnemite', 'Magneton', 'Gastly', 'Haunter', 'Koffing', 'Weezing', 'Mew']; //add pokemon for flying effect with class"bottom"
+const setNotToFlying =['Pidgey', 'Spearow', 'Farfetchd', 'Doduo', 'Dodrio'] //add pokemon to remove flying effect"
 let fourthImgElement;
 let thirdImgElement;
 let secondImgElement;
@@ -37,8 +39,6 @@ function emptyCardHTML() {
 function fillCardHTML(ID) {
     const type = handlerPokemonTypeBg(data[ID].type);
     const bg = type + '-bg';
-    const setToFlying = ['Beedrill', 'Venomoth', 'Geodude', 'Magnemite', 'Magneton', 'Gastly', 'Haunter', 'Koffing', 'Weezing', 'Mew']; //add pokemon for flying effect with class"bottom"
-    const setNotToFlying =['Pidgey', 'Spearow', 'Farfetchd', 'Doduo', 'Dodrio'] //add pokemon to remove flying effect"
     if ((data[ID].all_types[1] == 'flying' || setToFlying.includes(data[ID].name)) && !setNotToFlying.includes(data[ID].name)) {
         return /*html*/`
             <div class="imgBx flying" onclick="openPokeCard(${ID })">
