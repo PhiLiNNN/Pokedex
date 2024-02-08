@@ -251,3 +251,24 @@ function templatePokemonPhysicalStatsHTML(height, Weight) {
         </div>     
      `;
 }
+
+
+
+function templatePokeCardHTML(ID) {
+    let type = handlerPokemonTypeBg(data[ID].type);
+    const bg = type + '-bg';
+    if (ID == 150) 
+        type = 'mewtow'
+    if (ID == 151) 
+        type = 'mew'
+    return /*html*/`
+        <div class="single-card ${type} ${type}-shadow" onclick="openPokeSeachedCard(${ID})">
+            <div class="imgBx-single-card ${type}" >
+                <img src="${data[ID].imgAnimated}">
+            </div>
+            <div class="single-poke-name ${bg}">
+                <h2>${data[ID].name}</h2>
+            </div>
+        </div>
+    `;
+}

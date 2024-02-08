@@ -101,6 +101,7 @@ button {
 }
 
 .wrapper {
+  position: relative;
   flex-wrap: wrap;
   max-width: 1920px;
   display: flex;
@@ -284,6 +285,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .pokemon-card {
@@ -422,6 +424,172 @@ body {
   animation: loading 0.75s ease infinite;
 }
 
+
+.single-card {
+  width: 400px;
+  height: 450px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: -4px 4px 12px rgba(0, 0, 0, 1.0); 
+  perspective: 1000px; 
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+}
+
+
+.imgBx-single-card {
+  display: flex;
+  justify-content: center;
+  bottom: -2px;
+  cursor: pointer;
+ 
+}
+
+.imgBx-single-card img {
+  position: absolute;
+  width: auto;
+  height: auto;
+  bottom: 60px;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+
+.imgBx-single-card img:hover {
+  transform: scale(1.1) translateZ(30px);
+}
+
+.single-poke-name {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;  
+  justify-content: center;
+  height: 60px;
+  border-radius: 20px;
+}
+
+.popup-bg-searched-cards {
+  background: #110312;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0; 
+  display: flex;
+  justify-content: center;
+}
+
+
+.searched-cards {
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  height: 100%;
+  padding-block: 16px;
+}
+.close-button {
+  background: rgb(185, 180, 41);
+  position: absolute;
+  border-radius: 20px;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: bold;;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  z-index: 900;
+  outline: solid transparent 0.5px;
+}
+
+.close-button:hover {
+  background: rgb(27, 121, 126);
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.search-btn svg {
+  position: fixed;
+  top: 12px;
+  right: 70px;
+  width: 1.35rem;
+  filter: drop-shadow(0 2px 2px #00000026);
+}
+.search-btn {
+  position: fixed;
+  top: 10px;
+  right: 64px;
+  background: rgb(185, 180, 41);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 6px;
+  gap: 0.5rem;
+  outline: solid transparent 0.5px;
+  transition: all 0.25s ease-in-out;
+  z-index: 900;
+}
+@media only screen and (min-width: 1920px) {
+  .search-btn {
+      top: 10px; 
+      right: calc((100vw - 1920px) / 2 + 10px); 
+      max-width: 1920px; 
+  }
+  .search-btn svg {
+    top: 12px;
+    right: calc((100vw - 1920px) / 2 + 16px); 
+    max-width: 1920px; 
+  }
+}
+
+.search-btn:hover {
+  background: rgb(27, 121, 126);
+  outline: solid white 0.5px;
+  width: 13.5rem;
+  justify-content: flex-start;
+  padding: 0 0.5rem;
+}
+
+.search-btn input {
+  height: 1.5rem;
+  width: 1rem;
+  font-weight: 400;
+  font-size: 1rem;
+  color: black;
+  padding: 0.75rem;
+  border: none;
+  background: white;
+  border-radius: 1rem;
+  border: #b8cac7 solid 0.1px;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.search-btn:hover input {
+  width: 10.5rem;
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+
+
+::placeholder {
+  font-size: 0.75rem;
+}
+
+.search-btn input:active {
+  outline: solid rgb(39, 125, 18) 2.5px;
+  justify-content: flex-start;
+}
+
 @keyframes loading {
   from {
     transform: rotate(0turn);
@@ -432,8 +600,11 @@ body {
 }
 
 @media (max-width: 763px) {
-  .content {
-    margin-bottom: 0;
+  .search-btn {
+    right: 16px;
+  }
+  .search-btn svg {
+    right: 22px;
   }
   .box {
     width: 150px;
@@ -530,6 +701,19 @@ body {
     margin-top: -140px;
     letter-spacing: 6px;
   }
+
+}
+
+@media (max-width: 537px) {
+  .close-button {
+    left: 64px;
+  }
+  .search-btn {
+    right: 64px;
+  }
+  .search-btn svg {
+    right: 72px;
+  }
 }
 
 @media (max-width: 439px) {
@@ -539,6 +723,10 @@ body {
   .menu {
     gap: 0px;
   }
+  .single-card  {
+    width: 280px; 
+    height: 350px; 
+  }  
 }
 
 @media (max-height: 707px) {

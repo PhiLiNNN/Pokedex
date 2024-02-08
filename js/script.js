@@ -176,6 +176,7 @@ async function fetchAndProcessPokemonData(url, imgAnimated) {
         'all_types': [],
         'all_ability': [],
         'physicalStats': [(responseJson.height * 10 + ' cm'), responseJson.weight / 10 + ' Kg'],
+        'pokemonID': responseJson.id,
     };
     getPokemonStats(responseJson, pokemonData);
     getPokemonAllTypes(responseJson, pokemonData);
@@ -240,19 +241,33 @@ function openPokeCard(ID) {
 
 
 function closePokeCardByClick() {
+    console.log('clicked');
+
     document.addEventListener("click", function (event) {
         let headerSection = document.querySelector(".card-header");
         let statsSection = document.querySelector(".stats-container");
         let overview = document.getElementById("content-id");
-        if (!statsSection.contains(event.target) && !headerSection.contains(event.target) && !overview.contains(event.target)) {
+        let searchedCards = document.getElementById("searched-cards-id");
+
+        if (
+            !statsSection.contains(event.target) &&
+            !headerSection.contains(event.target) &&
+            !overview.contains(event.target) &&
+            !searchedCards.contains(event.target)
+        ) {
+            console.log('listener');
             closePokeCard();
         }
     });
 }
 
 
+
 function closePokeCard() {
+    console.log('closed')
     let element = document.getElementById('pokemon-popup-id');
+    let searchElement = document.getElementById('search-btn');
+    searchElement.classList.remove('d-none');
     element.classList.add('d-none');
     toggleScrollbar('auto');
 }
@@ -297,3 +312,58 @@ function disablePokemonSwitchBtn(ID) {
         return [false, true];
     return  [false, false]
 }
+
+
+
+
+function handleSearch(event) {
+    event.preventDefault(); 
+    let query = document.getElementById('search-input-id').value;
+    searchPokemon(query);
+}
+
+function searchPokemon(query) {
+    let searchResults = [];
+    if (query.trim().length > 0) {
+        toggleScrollbar('hidden');
+        searchResults = data.filter(pokemon =>
+            pokemon.name.toLowerCase().includes(query.toLowerCase())
+        );
+        createSearchedCards(searchResults);
+    } else {
+
+        return;
+    }
+}
+
+function createSearchedCards(searchResults) {
+    let element = document.getElementById('searched-cards-id');
+    let container = document.getElementById('searched-cards-content');
+    element.classList.remove('d-none');
+    container.innerHTML = '';
+    for (let index = 0; index < searchResults.length; index++) {
+        container.innerHTML += templatePokeCardHTML(searchResults[index].pokemonID  - 1);  
+    }
+}
+
+
+function closePopup() {
+    document.getElementById('searched-cards-id').classList.add('d-none');
+    toggleScrollbar('auto');
+    document.getElementById('search-input-id').value = ''
+}
+
+function openPokeSeachedCard(ID) {
+    console.log('opencard klciked');
+    let element = document.getElementById('pokemon-popup-id');
+    let searchElement = document.getElementById('search-btn');
+    searchElement.classList.add('d-none');
+    element.classList.remove('d-none');
+    toggleScrollbar('hidden');
+    const disableBtn = disablePokemonSwitchBtn(ID);
+    element.innerHTML = templatePokemonCardHTML(ID, disableBtn[0], disableBtn[1]);
+    createPokemonAbout(ID);
+    createPokemonType(ID);
+    renderChart(ID);
+}
+
